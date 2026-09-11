@@ -1,0 +1,9 @@
+flask
+flask-cors
+pillow
+gunicorn
+python-dotenv
+requests
+numpy
+torch
+torchvision

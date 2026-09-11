@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriSmart AI — Build Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEF0E6;
+    --paper:#E6E4D5;
+    --ink:#202B1E;
+    --ink-soft:#4A5548;
+    --accent:#B8763A;
+    --moss:#56714A;
+    --soil:#7C6A52;
+    --line: rgba(32,43,30,0.14);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:800px;
+    margin:0 auto;
+    padding:64px 28px 100px;
+  }
+  h1,h2,h3{
+    font-family:"Fraunces", serif;
+    font-weight:600;
+    color:var(--ink);
+    margin:0;
+  }
+  header.hero{
+    border-bottom:1.5px solid var(--soil);
+    padding-bottom:36px;
+    margin-bottom:48px;
+  }
+  header.hero h1{
+    font-size:clamp(2.2rem, 5vw, 3.2rem);
+    line-height:1.05;
+    letter-spacing:-0.01em;
+  }
+  header.hero p.tag{
+    margin-top:14px;
+    font-size:1.05rem;
+    color:var(--ink-soft);
+    max-width:560px;
+  }
+  header.hero .meta{
+    margin-top:22px;
+    font-size:0.92rem;
+    color:var(--soil);
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+  }
+  section{
+    margin-bottom:56px;
+  }
+  section > h2{
+    font-size:1.5rem;
+    margin-bottom:6px;
+  }
+  section > p.lede{
+    color:var(--ink-soft);
+    max-width:620px;
+    margin:8px 0 24px;
+    font-size:0.98rem;
+  }
+  .rule{
+    height:1px;
+    background:var(--line);
+    margin:0 0 24px;
+  }
+
+  /* AI tool stack */
+  .stackgroup{
+    margin-bottom:26px;
+  }
+  .stackgroup h3{
+    font-size:1.05rem;
+    font-weight:600;
+    color:var(--moss);
+    margin-bottom:10px;
+  }
+  .toolrow{
+    display:grid;
+    grid-template-columns: 190px 1fr;
+    gap:18px;
+    padding:12px 0;
+    border-top:1px solid var(--line);
+  }
+  .toolrow:first-of-type{border-top:none;}
+  .toolrow .name{
+    font-weight:600;
+    font-size:0.96rem;
+  }
+  .toolrow .desc{
+    color:var(--ink-soft);
+    font-size:0.94rem;
+  }
+
+  /* pipeline steps */
+  .steps{
+    counter-reset: step;
+  }
+  .step{
+    position:relative;
+    padding:18px 0 18px 52px;
+    border-top:1px solid var(--line);
+  }
+  .step:first-child{border-top:none;}
+  .step::before{
+    counter-increment: step;
+    content: counter(step);
+    position:absolute;
+    left:0;
+    top:18px;
+    width:32px;
+    height:32px;
+    border:1px solid var(--soil);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:"Fraunces", serif;
+    font-size:0.95rem;
+    color:var(--moss);
+  }
+  .step h3{
+    font-size:1rem;
+    font-weight:600;
+    margin-bottom:4px;
+  }
+  .step p{
+    color:var(--ink-soft);
+    font-size:0.94rem;
+    margin:0;
+  }
+  .step .tool-tag{
+    display:inline-block;
+    margin-top:8px;
+    font-size:0.82rem;
+    color:var(--accent);
+    font-weight:500;
+  }
+
+  /* work tracks */
+  .tracks{
+    display:grid;
+    gap:16px;
+  }
+  .track{
+    padding:18px 20px;
+    background:var(--paper);
+    border-left:3px solid var(--moss);
+  }
+  .track h3{
+    font-size:1rem;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .track p{
+    color:var(--ink-soft);
+    font-size:0.93rem;
+    margin:4px 0 0;
+  }
+  .track .who{
+    font-size:0.82rem;
+    color:var(--soil);
+    margin-top:8px;
+  }
+
+  /* timeline */
+  .timeline{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .day{
+    display:grid;
+    grid-template-columns: 130px 1fr;
+    gap:18px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+  }
+  .day:first-child{border-top:none;}
+  .day .date{
+    font-family:"Fraunces", serif;
+    font-weight:600;
+    color:var(--moss);
+    font-size:0.98rem;
+  }
+  .day .content p{
+    margin:0 0 6px;
+    color:var(--ink-soft);
+    font-size:0.94rem;
+  }
+  .day .content p:last-child{margin-bottom:0;}
+
+  /* checklist */
+  ul.checklist{
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  ul.checklist li{
+    padding:10px 0;
+    border-top:1px solid var(--line);
+    font-size:0.94rem;
+    color:var(--ink-soft);
+    padding-left:22px;
+    position:relative;
+  }
+  ul.checklist li:first-child{border-top:none;}
+  ul.checklist li::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:18px;
+    width:7px;
+    height:7px;
+    background:var(--accent);
+    border-radius:50%;
+  }
+  ul.checklist li strong{color:var(--ink);}
+
+  /* eval table */
+  table.eval{
+    width:100%;
+    border-collapse:collapse;
+    font-size:0.9rem;
+  }
+  table.eval th, table.eval td{
+    text-align:left;
+    padding:10px 8px;
+    border-top:1px solid var(--line);
+  }
+  table.eval th{
+    color:var(--soil);
+    font-weight:500;
+    font-size:0.85rem;
+  }
+  table.eval td:first-child{font-weight:600;}
+  table.eval tr:first-child td, table.eval tr:first-child th{border-top:none;}
+
+  .note{
+    background:var(--paper);
+    padding:16px 20px;
+    font-size:0.93rem;
+    color:var(--ink-soft);
+    border-left:3px solid var(--accent);
+  }
+
+  footer{
+    border-top:1.5px solid var(--soil);
+    padding-top:24px;
+    font-size:0.85rem;
+    color:var(--soil);
+  }
+
+  @media (max-width:600px){
+    .toolrow{grid-template-columns:1fr;}
+    .day{grid-template-columns:1fr;}
+    .toolrow .name{margin-bottom:2px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>AgriSmart AI</h1>
+    <p class="tag">SIH 2026 Internal Hackathon (C-433) — poore project ko AI-tools se banane ka plan: kaunsa AI kis kaam ke liye, code kaise banega, aur team ke andar kaam kaise divide hoga.</p>
+    <div class="meta">
+      <span>Team: 6 log (5 core + 1 support)</span>
+      <span>Window: 10–15 September</span>
+      <span>Core task: Crop Disease Detection (CV)</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>Approach in short</h2>
+    <div class="rule"></div>
+    <p class="lede">Problem statement ke hisaab se ek hi core task compulsory hai — leaf image se disease classify karna, macro-F1 aur confusion matrix report karna. Baaki sab (irrigation, weather, sustainability score, GenAI assistant, IoT, agentic layer) bonus hai. Poora build AI-assisted hoga: planning aur prompts ek AI se, actual code generation dusre AI se, aur review/testing phir se pehle wale AI se — is tarah se galtiyan kam hongi aur speed zyada milegi.</p>
+  </section>
+
+  <section>
+    <h2>AI Tool Stack — kis kaam ke liye kaunsa AI</h2>
+    <div class="rule"></div>
+    <p class="lede">Har stage ka apna tool hai. Neeche function-wise grouped hai, taaki confusion na ho ki "sab AI se karvana hai" ka matlab practically kya hai.</p>
+
+    <div class="stackgroup">
+      <h3>Planning &amp; specification</h3>
+      <div class="toolrow">
+        <div class="name">Claude (Sonnet)</div>
+        <div class="desc">Problem ko chhote technical specs me todna, exact prompts likhna jo code-generation AI ko diye jayenge, architecture decide karna, README aur model-report drafts banana.</div>
+      </div>
+    </div>
+
+    <div class="stackgroup">
+      <h3>Code generation</h3>
+      <div class="toolrow">
+        <div class="name">Antigravity + Gemini</div>
+        <div class="desc">Claude ke banaye hue detailed prompts se actual code likhna — training script, Flask/FastAPI backend, predict() interface, frontend HTML/JS. Ek baar me pura app mangne se quality gir jaati hai, isliye chhote-chhote, specific prompt dena.</div>
+      </div>
+    </div>
+
+    <div class="stackgroup">
+      <h3>Model training &amp; compute</h3>
+      <div class="toolrow">
+        <div class="name">Google Colab / Kaggle Notebooks</div>
+        <div class="desc">Free GPU. PlantVillage (train/val) aur PlantDoc-style field images (organizers ka held-out set) yahi run hoga.</div>
+      </div>
+      <div class="toolrow">
+        <div class="name">Pretrained backbone (transfer learning)</div>
+        <div class="desc">EfficientNet-B0 ya ResNet50 (Keras/PyTorch se) — pehle se train kiya hua model, sirf apne classes ke liye fine-tune karna. Isse macro-F1 kaafi accha aata hai kam data me bhi.</div>
+      </div>
+    </div>
+
+    <div class="stackgroup">
+      <h3>GenAI farmer assistant (bonus E)</h3>
+      <div class="toolrow">
+        <div class="name">Gemini API / Claude API</div>
+        <div class="desc">Disease prediction ke result ko plain-language explanation me convert karna, aur regional language (Hindi/Gujarati) me answer dena. Grounded rakhna — sirf model ke output aur precaution-list ke upar answer generate karna, random advice nahi.</div>
+      </div>
+    </div>
+
+    <div class="stackgroup">
+      <h3>Bonus data sources</h3>
+      <div class="toolrow">
+        <div class="name">OpenWeatherMap API</div>
+        <div class="desc">Weather-based intelligence (bonus C) aur irrigation timing (bonus B) ke liye live/forecast data.</div>
+      </div>
+    </div>
+
+    <div class="stackgroup">
+      <h3>Testing, review &amp; deployment check</h3>
+      <div class="toolrow">
+        <div class="name">Claude (Sonnet) — code review</div>
+        <div class="desc">Antigravity/Gemini se generate hua code final submit se pehle Claude ko dobara dikhana — bugs, security issues, aur README ke instructions actually chalte hai ya nahi, ye cross-check karna.</div>
+      </div>
+      <div class="toolrow">
+        <div class="name">Postman</div>
+        <div class="desc">predict(image_path) API endpoint ko manually test karna — sahi class label aur confidence return ho raha hai ya nahi, alag-alag images pe.</div>
+      </div>
+      <div class="toolrow">
+        <div class="name">Streamlit Cloud / Hugging Face Spaces</div>
+        <div class="desc">Web app ko free deploy karna, judges ke liye live demo link.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Build Pipeline — end to end</h2>
+    <div class="rule"></div>
+    <p class="lede">Ye order follow karo, kyuki step 3 (model) ke bina step 5-6 (backend/frontend) meaningful nahi bante.</p>
+    <div class="steps">
+      <div class="step">
+        <h3>Spec &amp; prompt planning</h3>
+        <p>Claude se poora technical spec likhwao — classes list, folder structure, predict() signature, API contract. Yehi spec Antigravity/Gemini ko prompt ke roop me diya jayega.</p>
+        <span class="tool-tag">Claude (Sonnet)</span>
+      </div>
+      <div class="step">
+        <h3>Dataset collection</h3>
+        <p>PlantVillage (Kaggle) train/val ke liye, PlantDoc-style field images kickoff data se. Shared class list (~15-20 classes) verbatim use karo.</p>
+        <span class="tool-tag">Kaggle</span>
+      </div>
+      <div class="step">
+        <h3>Preprocessing script</h3>
+        <p>Resize, augmentation, train/val/test split — script Antigravity+Gemini se generate karo, Claude ke prompt se.</p>
+        <span class="tool-tag">Antigravity + Gemini</span>
+      </div>
+      <div class="step">
+        <h3>Model training</h3>
+        <p>Transfer learning backbone fine-tune karo Colab pe. Held-out field set pe kabhi train nahi karna — sirf evaluation ke liye.</p>
+        <span class="tool-tag">Colab GPU</span>
+      </div>
+      <div class="step">
+        <h3>Evaluation</h3>
+        <p>Macro-F1, confusion matrix, per-class precision/recall — sab code se generate karke report me daalna.</p>
+        <span class="tool-tag">Colab + Claude (report drafting)</span>
+      </div>
+      <div class="step">
+        <h3>Backend API</h3>
+        <p>predict(image_path) function ko Flask/FastAPI route me wrap karna. Model weights load, single image pe prediction return.</p>
+        <span class="tool-tag">Antigravity + Gemini</span>
+      </div>
+      <div class="step">
+        <h3>Frontend web app</h3>
+        <p>Simple upload-image UI, result + precaution dikhana. Farmer-friendly language, kam clicks me result.</p>
+        <span class="tool-tag">Antigravity + Gemini, polish Claude se</span>
+      </div>
+      <div class="step">
+        <h3>Bonus modules jodo</h3>
+        <p>Weather intelligence, irrigation suggestion, sustainability score, GenAI assistant — jo bhi decide karo, backend me alag routes ke roop me add karo.</p>
+        <span class="tool-tag">Antigravity + Gemini + APIs</span>
+      </div>
+      <div class="step">
+        <h3>Testing &amp; review</h3>
+        <p>Har API endpoint Postman se test, poora code Claude ko dikhake review, README ke instructions se fresh machine pe try karke dekho ki chalta hai ya nahi.</p>
+        <span class="tool-tag">Claude + Postman</span>
+      </div>
+      <div class="step">
+        <h3>Docs, video &amp; submit</h3>
+        <p>README, model report, originality declaration — Claude se draft, team se final check. 3-5 min demo video record karo, GitHub repo public karo.</p>
+        <span class="tool-tag">Claude (drafting)</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Bonus module — realistic combo</h2>
+    <div class="rule"></div>
+    <p class="lede">Sab 7 bonus modules try karna zaroori nahi, aur karna bhi mushkil hai time me. Ye 3 combo purely software/API se ban jaate hain, hardware ki zaroorat nahi:</p>
+    <ul class="checklist">
+      <li><strong>Weather-Based Intelligence (C)</strong> — OpenWeatherMap se live data, simple rule-based actions ("delay irrigation - rain likely").</li>
+      <li><strong>Smart Irrigation (B)</strong> — soil moisture ka simulated/manual input le lo, weather ke saath combine karke irrigation-needed/not-needed decide karo.</li>
+      <li><strong>Farmer Assistant — GenAI (E)</strong> — Gemini/Claude API se disease result ko plain Hindi/Gujarati me explain karna.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Work Tracks</h2>
+    <div class="rule"></div>
+    <p class="lede">6 functional tracks hain, poore team ki count ke hisaab se. Track kisko milega ye team apne comfort ke hisaab se decide kare — ye sirf kaam ka scope define karta hai.</p>
+    <div class="tracks">
+      <div class="track">
+        <h3>Track 1 — Core CV Model</h3>
+        <p>Dataset preprocessing, transfer-learning model training, evaluation (macro-F1, confusion matrix). Ye sabse critical hai kyuki core task isi pe judge hota hai.</p>
+      </div>
+      <div class="track">
+        <h3>Track 2 — Backend &amp; predict interface</h3>
+        <p>Flask/FastAPI setup, predict() route, model loading, API structure jo Section 4.1 ke contract ko match kare.</p>
+      </div>
+      <div class="track">
+        <h3>Track 3 — Frontend / Web UI</h3>
+        <p>Upload-image flow, result display, precaution text — simple aur farmer-friendly, mobile pe bhi kaam kare.</p>
+      </div>
+      <div class="track">
+        <h3>Track 4 — Bonus Modules</h3>
+        <p>Weather intelligence + smart irrigation logic, sustainability score formula, API integrations.</p>
+      </div>
+      <div class="track">
+        <h3>Track 5 — GenAI Assistant &amp; language</h3>
+        <p>Gemini/Claude API se conversational explanation, regional-language output, prompt grounding.</p>
+      </div>
+      <div class="track">
+        <h3>Track 6 — Docs, Testing &amp; Demo</h3>
+        <p>README, model report, originality declaration, Postman testing, deployment, aur demo video editing. Ye track baaki 5 tracks ke saath overlap karke chalta hai, isliye support-role ke saath bhi accha fit hai.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Day-by-day timeline</h2>
+    <div class="rule"></div>
+    <p class="lede">Hackathon window 10–15 September hai, aur commit history isi window me real honi chahiye.</p>
+    <div class="timeline">
+      <div class="day">
+        <div class="date">10 Sept</div>
+        <div class="content">
+          <p>Spec finalize (Claude se prompts), repo setup, dataset download shuru, class-list confirm.</p>
+        </div>
+      </div>
+      <div class="day">
+        <div class="date">11 Sept</div>
+        <div class="content">
+          <p>Preprocessing script ready, pehla training run start, backend skeleton (Flask/FastAPI routes) generate karo.</p>
+        </div>
+      </div>
+      <div class="day">
+        <div class="date">12 Sept</div>
+        <div class="content">
+          <p>Model fine-tuning continue, evaluation metrics nikalo, frontend UI ka pehla version ready karo.</p>
+        </div>
+      </div>
+      <div class="day">
+        <div class="date">13 Sept</div>
+        <div class="content">
+          <p>Backend + frontend + model integrate karo end-to-end. Bonus modules (weather/irrigation) add karna shuru.</p>
+        </div>
+      </div>
+      <div class="day">
+        <div class="date">14 Sept</div>
+        <div class="content">
+          <p>GenAI assistant jodo, poora flow Postman se test, Claude se full code-review, bugs fix.</p>
+        </div>
+      </div>
+      <div class="day">
+        <div class="date">15 Sept</div>
+        <div class="content">
+          <p>README + model report finalize, deployment live karo, demo video record, GitHub repo final submit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Submission checklist</h2>
+    <div class="rule"></div>
+    <p class="lede">Judge sirf isi cheez ko dekhega — ye missing hui to AI/ML axis full nahi milega, chahe model kitna accha bhi ho.</p>
+    <ul class="checklist">
+      <li><strong>/README.md</strong> — kaunse core+bonus modules bane, setup/run instructions (10 min me judge reproduce kar paaye), dataset source/licence, saare metrics, architecture overview, limitations, demo video link.</li>
+      <li><strong>/src ya /app</strong> — source code.</li>
+      <li><strong>/model</strong> — training + predict interface, weights (large ho to release/link se).</li>
+      <li><strong>/report</strong> — one-page model report: task, dataset &amp; split, model/approach, metric &amp; result, baseline comparison, limitations.</li>
+      <li><strong>requirements.txt</strong> + environment file + clear run instructions.</li>
+      <li><strong>Originality declaration</strong> — README me third-party code/notebooks list karo jo reference liye.</li>
+      <li><strong>Demo video</strong> — 3-5 minute, core task naye image pe chalta hua dikhna chahiye, plus bonus modules.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Evaluation ka focus (100 points)</h2>
+    <div class="rule"></div>
+    <table class="eval">
+      <tr><th>Parameter</th><th>Weight</th><th>Kya matter karta hai</th></tr>
+      <tr><td>AI/ML Implementation</td><td>25</td><td>Held-out macro-F1, honest split, no leakage</td></tr>
+      <tr><td>Technical Implementation</td><td>20</td><td>Reproducibility — README se chalta hai ya nahi</td></tr>
+      <tr><td>Innovation &amp; Creativity</td><td>15</td><td>Standard tutorial se aage kya naya kiya</td></tr>
+      <tr><td>Sustainability &amp; Impact</td><td>15</td><td>Quantified benefit, sirf claim nahi</td></tr>
+      <tr><td>User Experience</td><td>10</td><td>Farmer-friendly clarity, regional language</td></tr>
+      <tr><td>Problem Understanding</td><td>10</td><td>Report me honest limitations</td></tr>
+      <tr><td>Presentation &amp; Demo</td><td>5</td><td>Video clear aur complete ho</td></tr>
+    </table>
+  </section>
+
+  <div class="note">
+    Sabse zyada weight (25+20 = 45 points) reproducibility aur macro-F1 pe hai — isliye Track 1 (model) aur Track 6 (README/testing) ko last moment pe rush mat karna, chahe bonus modules kam bhi bane to problem nahi.
+  </div>
+
+  <footer>
+    AgriSmart AI — SIH 2026 Internal Hackathon, C-433 · Plan generated for team build reference.
+  </footer>
+
+</div>
+</body>
+</html>

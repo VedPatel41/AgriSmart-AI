@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriSmart AI — Digital Farming Companion</title>
+  <meta name="description" content="A professional, farmer-focused digital agricultural companion for crop health, weather intelligence, and farm management.">
+
+  <!-- Google Fonts Typography: Outfit for headers, Inter for crisp readability -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       SECTION 1: AUTHENTICATION CONTAINER (LOGIN & SIGNUP)
+       ========================================================================= -->
+  <div id="auth-view" class="auth-page-wrapper">
+    <div class="auth-split-card">
+      
+      <!-- Left Hero Visual Panel -->
+      <div class="auth-visual-panel">
+        <div class="auth-visual-overlay"></div>
+        <div class="auth-visual-content">
+          <div class="auth-visual-brand">
+            <div class="auth-brand-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 20h10"></path>
+                <path d="M10 20c5.5-2.5.8-6.4 3-10"></path>
+                <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"></path>
+                <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"></path>
+              </svg>
+            </div>
+            <span class="auth-brand-name">AgriSmart AI</span>
+          </div>
+
+          <div class="auth-visual-hero">
+            <h2 data-i18n="auth.loginSub">Smart decisions for healthier crops.</h2>
+            <p>A trusted digital companion built for Indian farmers. Diagnose diseases, understand local field weather, and optimize farm resources.</p>
+          </div>
+
+          <div class="auth-visual-badges">
+            <span class="auth-pill-badge">🌱 Farmer Workspace</span>
+            <span class="auth-pill-badge">🔬 Crop Health AI</span>
+            <span class="auth-pill-badge">☀ Micro-Weather</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Form Section -->
+      <div class="auth-form-panel">
+        
+        <!-- Tab Selectors -->
+        <div class="auth-tabs" role="tablist">
+          <button type="button" class="auth-tab auth-tab-active" id="tab-login" role="tab" aria-selected="true" aria-controls="form-card-login">Sign In</button>
+          <button type="button" class="auth-tab" id="tab-signup" role="tab" aria-selected="false" aria-controls="form-card-signup">Create Account</button>
+        </div>
+
+        <!-- 1. Login Form Card -->
+        <div id="form-card-login" class="auth-form-body" role="tabpanel" aria-labelledby="tab-login">
+          <div class="auth-card-header">
+            <h1 class="auth-card-title" data-i18n="auth.loginTitle">Welcome back</h1>
+            <p class="auth-card-subtitle" data-i18n="auth.loginSub">Sign in to continue managing your farm.</p>
+          </div>
+
+          <form id="form-login" novalidate>
+            <div class="form-group">
+              <label for="login-identifier" class="form-label" data-i18n="auth.identifierLabel">Email or Mobile Number</label>
+              <input type="text" id="login-identifier" class="form-input" placeholder="farmer@example.com or 10-digit mobile" autocomplete="username" required>
+              <span class="form-error-msg hidden" id="login-identifier-error" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="login-password" class="form-label" data-i18n="auth.passwordLabel">Password</label>
+              <div class="password-input-group">
+                <input type="password" id="login-password" class="form-input" placeholder="Enter password (min 6 chars)" autocomplete="current-password" required>
+                <button type="button" class="btn-toggle-password" id="btn-toggle-login-pass" aria-label="Toggle password visibility" title="Show/Hide Password" tabindex="0">
+                  <svg class="icon-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg class="icon-eye-off hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+              <span class="form-error-msg hidden" id="login-password-error" role="alert"></span>
+            </div>
+
+            <div class="form-aux-row">
+              <label class="form-checkbox-label">
+                <input type="checkbox" id="login-remember" checked>
+                <span>Remember me</span>
+              </label>
+              <span class="form-aux-note" title="Password reset requires active backend integration">Demo session</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" id="btn-login-submit" data-i18n="auth.btnLogin">
+              Sign In to Farm
+            </button>
+          </form>
+
+          <div class="auth-separator">
+            <span>or evaluation demo</span>
+          </div>
+
+          <button type="button" class="btn btn-demo btn-block" id="btn-demo-login" data-i18n="auth.btnDemo">
+            🌾 Continue as Demo Farmer
+          </button>
+
+          <div class="demo-disclaimer-card" role="note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+              <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span data-i18n="auth.demoDisclaimer">Demo session: Pre-loads sample Indian farm context for evaluation. No credentials needed.</span>
+          </div>
+
+          <div class="auth-switch-prompt">
+            <span data-i18n="auth.noAccount">Don't have an account?</span>
+            <a href="#" id="link-goto-signup" data-i18n="auth.createAccountLink">Create one now</a>
+          </div>
+        </div>
+
+        <!-- 2. Sign-Up Form Card -->
+        <div id="form-card-signup" class="auth-form-body hidden" role="tabpanel" aria-labelledby="tab-signup">
+          <div class="auth-card-header">
+            <h1 class="auth-card-title" data-i18n="auth.signupTitle">Create your farm account</h1>
+            <p class="auth-card-subtitle" data-i18n="auth.signupSub">Start by setting up your farmer profile.</p>
+          </div>
+
+          <form id="form-signup" novalidate>
+            <div class="form-group">
+              <label for="signup-name" class="form-label" data-i18n="auth.fullNameLabel">Full Name</label>
+              <input type="text" id="signup-name" class="form-input" placeholder="e.g. Ramesh Patel" autocomplete="name" required>
+              <span class="form-error-msg hidden" id="signup-name-error" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-identifier" class="form-label" data-i18n="auth.identifierLabel">Email or Mobile Number</label>
+              <input type="text" id="signup-identifier" class="form-input" placeholder="farmer@example.com or 10-digit mobile" autocomplete="username" required>
+              <span class="form-error-msg hidden" id="signup-identifier-error" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-farm" class="form-label">
+                <span data-i18n="auth.farmNameLabel">Farm Name</span>
+                <span class="optional-tag">(Optional)</span>
+              </label>
+              <input type="text" id="signup-farm" class="form-input" placeholder="e.g. Green Valley Farm">
+            </div>
+
+            <div class="form-group">
+              <label for="signup-password" class="form-label" data-i18n="auth.passwordLabel">Password</label>
+              <div class="password-input-group">
+                <input type="password" id="signup-password" class="form-input" placeholder="At least 6 characters" autocomplete="new-password" required>
+                <button type="button" class="btn-toggle-password" id="btn-toggle-signup-pass" aria-label="Toggle password visibility" title="Show/Hide Password" tabindex="0">
+                  <svg class="icon-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg class="icon-eye-off hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+              <span class="form-error-msg hidden" id="signup-password-error" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-confirm-password" class="form-label" data-i18n="auth.confirmPasswordLabel">Confirm Password</label>
+              <div class="password-input-group">
+                <input type="password" id="signup-confirm-password" class="form-input" placeholder="Re-enter password" autocomplete="new-password" required>
+                <button type="button" class="btn-toggle-password" id="btn-toggle-confirm-pass" aria-label="Toggle password visibility" title="Show/Hide Password" tabindex="0">
+                  <svg class="icon-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <svg class="icon-eye-off hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                </button>
+              </div>
+              <span class="form-error-msg hidden" id="signup-confirm-password-error" role="alert"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" id="btn-signup-submit" data-i18n="auth.btnSignup">
+              Create Account
+            </button>
+          </form>
+
+          <div class="auth-switch-prompt">
+            <span data-i18n="auth.haveAccount">Already have an account?</span>
+            <a href="#" id="link-goto-login" data-i18n="auth.loginLink">Sign in here</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SECTION 2: FARMER ONBOARDING MODAL WIZARD (5-STEP FLOW)
+       ========================================================================= -->
+  <div id="onboarding-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="onboard-modal-title" aria-hidden="true">
+    <div class="onboarding-card">
+      
+      <div class="onboarding-header">
+        <div class="onboarding-progress-row">
+          <div class="onboarding-brand">
+            🌱 <span>AgriSmart Onboarding</span>
+          </div>
+          <span class="onboarding-step-counter" id="onboard-progress-label">Step 1 of 5</span>
+        </div>
+        
+        <div class="progress-track">
+          <div class="progress-fill" id="onboard-progress-fill" style="width: 20%;"></div>
+        </div>
+
+        <div class="onboarding-step-indicators">
+          <div class="step-dot step-active" id="step-indicator-1" title="Step 1: About You">1</div>
+          <div class="step-dot" id="step-indicator-2" title="Step 2: Your Farm">2</div>
+          <div class="step-dot" id="step-indicator-3" title="Step 3: Your Crop">3</div>
+          <div class="step-dot" id="step-indicator-4" title="Step 4: Farm Conditions">4</div>
+          <div class="step-dot" id="step-indicator-5" title="Step 5: Review">5</div>
+        </div>
+      </div>
+
+      <div class="onboarding-body">
+        
+        <!-- Step 1: About You -->
+        <div id="onboard-step-1" class="onboard-step-content">
+          <h2 class="onboarding-step-title" id="onboard-modal-title" data-i18n="onboard.step1Title">Tell us about yourself</h2>
+          <p class="onboarding-step-subtitle" data-i18n="onboard.sub">Set up your farmer identity to personalize crop recommendations and advisory.</p>
+
+          <div class="form-group">
+            <label for="onboard-farmer-name" class="form-label">Farmer / Primary Caretaker Name *</label>
+            <input type="text" id="onboard-farmer-name" class="form-input" placeholder="e.g. Ramesh Patel" required>
+            <span class="form-error-msg hidden onboard-error" id="onboard-farmer-name-error" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="onboard-farmer-email" class="form-label">
+              <span>Email or Mobile Contact</span>
+              <span class="optional-tag">(Optional)</span>
+            </label>
+            <input type="text" id="onboard-farmer-email" class="form-input" placeholder="e.g. farmer@example.com or 10-digit mobile">
+            <span class="form-error-msg hidden onboard-error" id="onboard-farmer-email-error" role="alert"></span>
+          </div>
+
+          <div class="onboarding-actions">
+            <button type="button" class="btn btn-ghost" id="onboard-btn-skip" data-i18n="onboard.btnSkip">Skip for now</button>
+            <button type="button" class="btn btn-primary" id="onboard-btn-next-1" data-i18n="onboard.btnNext">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Your Farm -->
+        <div id="onboard-step-2" class="onboard-step-content hidden">
+          <h2 class="onboarding-step-title" data-i18n="onboard.step2Title">Your farm details</h2>
+          <p class="onboarding-step-subtitle">Used for localized weather and disease alerts. We do not track precise GPS.</p>
+
+          <div class="form-group">
+            <label for="onboard-farm-name" class="form-label">Farm / Land Name *</label>
+            <input type="text" id="onboard-farm-name" class="form-input" placeholder="e.g. Patel Krishi Farm" required>
+            <span class="form-error-msg hidden onboard-error" id="onboard-farm-name-error" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="onboard-state" class="form-label">State *</label>
+            <select id="onboard-state" class="form-select" required>
+              <option value="">Select State</option>
+            </select>
+            <span class="form-error-msg hidden onboard-error" id="onboard-state-error" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="onboard-district" class="form-label">District *</label>
+            <input type="text" id="onboard-district" class="form-input" placeholder="e.g. Ahmedabad, Anand, Ludhiana" required>
+            <span class="form-error-msg hidden onboard-error" id="onboard-district-error" role="alert"></span>
+          </div>
+
+          <div class="onboarding-actions">
+            <button type="button" class="btn btn-secondary" id="onboard-btn-back-2" data-i18n="onboard.btnBack">← Back</button>
+            <button type="button" class="btn btn-primary" id="onboard-btn-next-2" data-i18n="onboard.btnNext">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Crop Selection & Stage -->
+        <div id="onboard-step-3" class="onboard-step-content hidden">
+          <h2 class="onboarding-step-title" data-i18n="onboard.step3Title">What is your main crop?</h2>
+          <p class="onboarding-step-subtitle">Prioritizes ICAR diagnostic models and crop-specific irrigation advisories.</p>
+
+          <div class="form-group">
+            <label for="onboard-crop" class="form-label">Primary Crop *</label>
+            <select id="onboard-crop" class="form-select" required>
+              <option value="">Select Primary Crop</option>
+            </select>
+            <span class="form-error-msg hidden onboard-error" id="onboard-crop-error" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="onboard-crop-stage" class="form-label">Current Growth Stage *</label>
+            <select id="onboard-crop-stage" class="form-select" required>
+              <option value="">Select Crop Growth Stage</option>
+              <option value="Germination / Seedling">Germination / Seedling</option>
+              <option value="Tillering / Vegetative">Tillering / Vegetative</option>
+              <option value="Flowering / Heading">Flowering / Heading</option>
+              <option value="Grain Filling / Milking">Grain Filling / Milking</option>
+              <option value="Maturity / Harvest Ready">Maturity / Harvest Ready</option>
+            </select>
+            <span class="form-error-msg hidden onboard-error" id="onboard-crop-stage-error" role="alert"></span>
+          </div>
+
+          <div class="onboarding-actions">
+            <button type="button" class="btn btn-secondary" id="onboard-btn-back-3" data-i18n="onboard.btnBack">← Back</button>
+            <button type="button" class="btn btn-primary" id="onboard-btn-next-3" data-i18n="onboard.btnNext">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Farm Conditions (Soil & Size) -->
+        <div id="onboard-step-4" class="onboard-step-content hidden">
+          <h2 class="onboarding-step-title">Farm conditions & soil</h2>
+          <p class="onboarding-step-subtitle">Optional details to refine irrigation moisture targets and farm analytics.</p>
+
+          <div class="form-group">
+            <label for="onboard-soil" class="form-label">
+              <span>Soil Type</span>
+              <span class="optional-tag">(Optional)</span>
+            </label>
+            <select id="onboard-soil" class="form-select">
+              <option value="">Select Soil Type (Optional)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="onboard-acres" class="form-label">
+              <span>Farm Size in Acres</span>
+              <span class="optional-tag">(Optional)</span>
+            </label>
+            <input type="number" id="onboard-acres" class="form-input" placeholder="e.g. 4.5" min="0.1" step="0.1">
+          </div>
+
+          <div class="onboarding-actions">
+            <button type="button" class="btn btn-secondary" id="onboard-btn-back-4" data-i18n="onboard.btnBack">← Back</button>
+            <button type="button" class="btn btn-primary" id="onboard-btn-next-4" data-i18n="onboard.btnNext">Review →</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Review Summary -->
+        <div id="onboard-step-5" class="onboard-step-content hidden">
+          <h2 class="onboarding-step-title">Review your farm profile</h2>
+          <p class="onboarding-step-subtitle">Verify your entered information before finalizing. You can edit this anytime.</p>
+
+          <div class="onboarding-review-card" id="onboard-review-summary">
+            <!-- Dynamically populated by AgriOnboarding -->
+          </div>
+
+          <div class="onboarding-actions">
+            <button type="button" class="btn btn-secondary" id="onboard-btn-back-5">← Edit Details</button>
+            <button type="button" class="btn btn-primary" id="onboard-btn-finish" data-i18n="onboard.btnFinish">Complete Setup</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SECTION 3: MAIN APPLICATION SHELL
+       ========================================================================= -->
+  <div id="app-shell" class="app-shell hidden">
+    <!-- Mobile Navigation Drawer Backdrop -->
+    <div id="mobile-sidebar-backdrop" class="mobile-backdrop hidden" aria-hidden="true"></div>
+
+    <!-- 3.1 Mobile Navigation Drawer (Off-canvas drawer for mobile viewports) -->
+    <aside class="mobile-nav-drawer" id="app-sidebar" aria-label="Mobile Navigation">
+      <div class="mobile-drawer-header">
+        <div class="brand-title-wrap">
+          <div class="brand-logo-row">
+            <div class="brand-icon-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M7 20h10"></path>
+                <path d="M10 20c5.5-2.5.8-6.4 3-10"></path>
+                <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"></path>
+              </svg>
+            </div>
+            <span class="brand-name">AgriSmart AI</span>
+          </div>
+          <span class="brand-tagline">Farmer Companion</span>
+        </div>
+        <button type="button" class="btn-drawer-close" id="btn-drawer-close" aria-label="Close navigation drawer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <nav class="mobile-drawer-links" aria-label="Mobile Menu Links">
+        <a href="#overview" class="nav-link nav-link-active" data-view="overview" aria-current="page">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="#my-farm" class="nav-link" data-view="my-farm">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 20h10"></path><path d="M10 20c5.5-2.5.8-6.4 3-10"></path><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"></path></svg>
+          <span>My Farm</span>
+        </a>
+        <a href="#crop-health" class="nav-link" data-view="crop-health">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0 0-14h-1"></path><path d="M9 14h2"></path><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"></path><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"></path></svg>
+          <span>Crop Health</span>
+        </a>
+        <a href="#weather" class="nav-link" data-view="weather">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="M20 12h2"></path><path d="m19.07 4.93-1.41 1.41"></path><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"></path><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"></path></svg>
+          <span>Weather</span>
+        </a>
+        <a href="#irrigation" class="nav-link" data-view="irrigation">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"></path><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"></path></svg>
+          <span>Irrigation</span>
+        </a>
+        <a href="#sustainability" class="nav-link" data-view="sustainability">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+          <span>Sustainability</span>
+        </a>
+        <a href="#assistant" class="nav-link" data-view="assistant">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
+          <span>AI Assistant</span>
+        </a>
+        <div class="mobile-drawer-divider"></div>
+        <a href="#settings" class="nav-link" data-view="settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="mobile-drawer-footer">
+        <div class="sidebar-user-preview">
+          <div class="user-avatar-sm" id="sidebar-user-avatar">RP</div>
+          <div class="user-meta-sm">
+            <div class="user-name-sm" id="sidebar-user-name">Farmer</div>
+            <div class="user-farm-sm" id="sidebar-user-farm">My Farm</div>
+          </div>
+        </div>
+        <button type="button" class="sidebar-logout-btn btn-trigger-logout" title="Log Out" aria-label="Log Out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- 3.2 Fixed/Sticky Top Navigation Bar -->
+    <header class="app-top-nav" id="app-top-nav">
+      <div class="nav-container">
+        
+        <!-- Brand Logo & Title -->
+        <a href="#overview" class="nav-brand" aria-label="AgriSmart AI Home">
+          <div class="brand-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M7 20h10"></path>
+              <path d="M10 20c5.5-2.5.8-6.4 3-10"></path>
+              <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"></path>
+            </svg>
+          </div>
+          <div class="brand-title-wrap">
+            <span class="brand-name">AgriSmart AI</span>
+            <span class="brand-tagline">Farmer Companion</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links (Centered) -->
+        <nav class="nav-menu-desktop" aria-label="Primary Navigation">
+          <a href="#overview" class="nav-link nav-link-active" data-view="overview" aria-current="page">Dashboard</a>
+          <a href="#my-farm" class="nav-link" data-view="my-farm">My Farm</a>
+          <a href="#crop-health" class="nav-link" data-view="crop-health">Crop Health</a>
+          <a href="#weather" class="nav-link" data-view="weather">Weather</a>
+          <a href="#irrigation" class="nav-link" data-view="irrigation">Irrigation</a>
+          <a href="#sustainability" class="nav-link" data-view="sustainability">Sustainability</a>
+          <a href="#assistant" class="nav-link" data-view="assistant">AI Assistant</a>
+        </nav>
+
+        <!-- Right: Status, Profile & Mobile Hamburger -->
+        <div class="nav-actions">
+          
+          <!-- Hidden Accessible Page Title for Compatibility -->
+          <h1 class="header-page-title sr-only" id="header-page-title">Dashboard Overview</h1>
+
+          <!-- Live Server Status Indicator -->
+          <div class="status-pill status-checking" id="api-status-pill" title="Backend connectivity status">
+            <span class="status-dot"></span>
+            <span id="api-status-text" data-i18n="nav.statusChecking">Checking...</span>
+          </div>
+
+          <!-- Demo Mode Badge -->
+          <span class="demo-mode-badge hidden" id="header-demo-badge">Demo Mode</span>
+
+          <!-- User Profile Dropdown Menu -->
+          <div class="profile-menu-container">
+            <button type="button" class="header-profile-btn" id="header-profile-trigger" aria-haspopup="true" aria-expanded="false" aria-label="User profile menu">
+              <div class="user-avatar-sm" id="header-user-avatar">RP</div>
+              <span class="header-user-name-preview" id="nav-header-user-name">Farmer</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="profile-chevron"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+
+            <div class="profile-dropdown-menu hidden" id="header-profile-dropdown" role="menu">
+              <div class="dropdown-user-header">
+                <div class="dropdown-user-name" id="header-user-name">Farmer</div>
+                <div class="dropdown-user-farm" id="header-user-farm">My Farm</div>
+              </div>
+              <div class="dropdown-items-list">
+                <a href="#my-farm" class="dropdown-item nav-link" data-view="my-farm" role="menuitem">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  <span>My Farm Profile</span>
+                </a>
+                <a href="#settings" class="dropdown-item nav-link" data-view="settings" role="menuitem">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                  <span>Settings</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <button type="button" class="dropdown-item btn-trigger-logout" role="menuitem">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                  <span>Log Out</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Hamburger Menu Button -->
+          <button type="button" class="btn-hamburger" id="btn-mobile-menu" aria-label="Toggle navigation menu" aria-expanded="false">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- 3.3 Main Content Workspace -->
+    <div class="app-main-layout">
+      
+      <!-- Main Content Scroll Area -->
+      <main class="main-content-scroll" id="main-content-scroll">
+        <div class="page-container view-container">
+
+          <!-- --------------------------------          <!-- ---------------------------------------------------------------
+               PAGE 1: OVERVIEW DASHBOARD (FARMER COMMAND CENTER)
+               --------------------------------------------------------------- -->
+          <section id="view-overview" class="view-section">
+            
+            <!-- 1.1 Command Header: Time-aware greeting, farm meta line, and quick actions -->
+            <div class="dash-command-header">
+              <div class="dash-header-main">
+                <div class="dash-greeting-block">
+                  <h1 class="dash-welcome-title" id="overview-welcome-farmer">Good morning, Farmer 👋</h1>
+                  <p class="dash-welcome-sub">Here's what's happening with your farm today.</p>
+                  <div class="dash-meta-line" id="dash-farm-meta-line">
+                    <span class="meta-item">My Farm</span>
+                    <span class="meta-sep">•</span>
+                    <span class="meta-item">Location not set</span>
+                    <span class="meta-sep">•</span>
+                    <span class="meta-item">Primary Crop: Not set</span>
+                  </div>
+                </div>
+
+                <div class="dash-quick-actions" aria-label="Quick Actions">
+                  <button type="button" class="btn btn-primary" data-nav-target="crop-health">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0 0-14h-1"></path><path d="M9 14h2"></path><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"></path><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"></path></svg>
+                    <span>Analyze Crop</span>
+                  </button>
+                  <button type="button" class="btn btn-secondary" data-nav-target="weather">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="M20 12h2"></path><path d="m19.07 4.93-1.41 1.41"></path><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"></path><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"></path></svg>
+                    <span>Weather</span>
+                  </button>
+                  <button type="button" class="btn btn-secondary" data-nav-target="irrigation">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"></path></svg>
+                    <span>Irrigation</span>
+                  </button>
+                  <button type="button" class="btn btn-secondary" data-nav-target="assistant">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
+                    <span>Ask AI</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Top Snapshot Pills -->
+              <div class="overview-snapshot-strip">
+                <div class="snapshot-pill">
+                  <span class="snapshot-label">Primary Crop:</span>
+                  <strong id="dash-snap-crop">Not set</strong>
+                </div>
+                <div class="snapshot-pill">
+                  <span class="snapshot-label">Location:</span>
+                  <strong id="dash-snap-loc">Not set</strong>
+                </div>
+                <div class="snapshot-pill">
+                  <span class="snapshot-label">Health Status:</span>
+                  <span id="dash-snap-health" class="text-muted">No crop analysis yet</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1.2 Top Tier: Crop Health Hero (Dominant) + Farm Snapshot -->
+            <div class="dash-overview-grid">
+              
+              <!-- Core Crop Health Hero Card -->
+              <div class="dash-card dash-crop-health-hero">
+                <div class="dash-card-header">
+                  <div class="dash-header-title-group">
+                    <div class="dash-card-icon-box icon-crop-health">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0 0-14h-1"></path><path d="M9 14h2"></path><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"></path><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"></path></svg>
+                    </div>
+                    <div>
+                      <h2 class="dash-card-title">Crop Health</h2>
+                      <p class="dash-card-subtitle">AI-assisted leaf disease detection</p>
+                    </div>
+                  </div>
+                  <span class="feature-badge">Core Tool</span>
+                </div>
+
+                <!-- Dynamic Crop Health Body: Switches between diagnosis summary and empty state -->
+                <div id="dash-crop-hero-body" class="crop-hero-body">
+                  <div class="crop-hero-empty" id="dash-crop-empty-state">
+                    <div class="crop-empty-illustration">
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M7 20h10"></path>
+                        <path d="M10 20c5.5-2.5.8-6.4 3-10"></path>
+                        <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"></path>
+                        <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"></path>
+                      </svg>
+                    </div>
+                    <h3 class="crop-empty-title">No crop health analysis yet</h3>
+                    <p class="crop-empty-desc">
+                      Upload a clear leaf image to diagnose disease conditions with ICAR-aligned models and get immediate precautions.
+                    </p>
+                    <button type="button" class="btn btn-primary" data-nav-target="crop-health">
+                      🔬 Analyze Leaf Image
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Farm Snapshot Card -->
+              <div class="dash-card dash-farm-snapshot-card">
+                <div class="dash-card-header">
+                  <div class="dash-header-title-group">
+                    <div class="dash-card-icon-box icon-farm">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 20h10"></path><path d="M10 20c5.5-2.5.8-6.4 3-10"></path><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"></path></svg>
+                    </div>
+                    <div>
+                      <h2 class="dash-card-title">Farm Snapshot</h2>
+                      <p class="dash-card-subtitle">Registered land & conditions</p>
+                    </div>
+                  </div>
+                  <span class="feature-badge badge-subtle">Farm Profile</span>
+                </div>
+
+                <div class="dash-farm-specs">
+                  <div class="spec-row">
+                    <span class="spec-label">Primary Crop</span>
+                    <strong id="dash-farm-crop" class="spec-val">Not set</strong>
+                  </div>
+                  <div class="spec-row">
+                    <span class="spec-label">Growth Stage</span>
+                    <strong id="dash-farm-stage" class="spec-val">Not set</strong>
+                  </div>
+                  <div class="spec-row">
+                    <span class="spec-label">Soil Type</span>
+                    <strong id="dash-farm-soil" class="spec-val">Not set</strong>
+                  </div>
+                  <div class="spec-row">
+                    <span class="spec-label">Location</span>
+                    <strong id="dash-farm-loc" class="spec-val">Not set</strong>
+                  </div>
+                  <div class="spec-row">
+                    <span class="spec-label">Farm Size</span>
+                    <strong id="dash-farm-size" class="spec-val">Not set</strong>
+                  </div>
+                </div>
+
+                <div class="dash-card-footer">
+                  <button type="button" class="btn btn-secondary btn-block" data-nav-target="my-farm">
+                    🌱 View Farm Profile
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- 1.3 Smart Farming Section -->
+            <div class="dash-smart-farming-section">
+              <div class="section-heading-row">
+                <div>
+                  <h3 class="section-title" data-i18n="sf.sectionTitle">Smart Farming</h3>
+                  <p class="section-subtitle" data-i18n="sf.sectionSub">Real-time decision support for your farm</p>
+                </div>
+              </div>
+
+              <div class="smart-farming-cards-grid">
+                <!-- Card 1: Weather Intelligence -->
+                <div class="sf-dash-card" id="dash-weather-card">
+                  <div class="sf-card-header">
+                    <div class="sf-icon-box">☀</div>
+                    <span class="sf-badge" id="dash-weather-badge">Weather</span>
+                  </div>
+                  <h4 class="sf-card-title" data-i18n="sf.weatherCardTitle">Weather Intelligence</h4>
+                  <div class="sf-card-body" id="dash-weather-body">
+                    <div class="sf-metric-lead" id="dash-weather-temp">--°C</div>
+                    <p class="sf-sub-text" id="dash-weather-summary">Loading weather...</p>
+                  </div>
+                  <div class="sf-card-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-nav-target="weather" data-i18n="sf.weatherBtn">
+                      View Weather →
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Card 2: Smart Irrigation -->
+                <div class="sf-dash-card" id="dash-irrigation-card">
+                  <div class="sf-card-header">
+                    <div class="sf-icon-box">💧</div>
+                    <span class="sf-badge" id="dash-irrigation-badge">Advisory</span>
+                  </div>
+                  <h4 class="sf-card-title" data-i18n="sf.irrigationCardTitle">Smart Irrigation</h4>
+                  <div class="sf-card-body" id="dash-irrigation-body">
+                    <div class="sf-rec-pill" id="dash-irrigation-rec">Not calculated</div>
+                    <p class="sf-sub-text" id="dash-irrigation-summary">Enter soil moisture to check</p>
+                  </div>
+                  <div class="sf-card-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-nav-target="irrigation" data-i18n="sf.irrigationBtn">
+                      Check Irrigation →
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Card 3: Sustainability -->
+                <div class="sf-dash-card" id="dash-sustainability-card">
+                  <div class="sf-card-header">
+                    <div class="sf-icon-box">♻</div>
+                    <span class="sf-badge" id="dash-sustainability-badge">Indicator</span>
+                  </div>
+                  <h4 class="sf-card-title" data-i18n="sf.sustainabilityCardTitle">Sustainability</h4>
+                  <div class="sf-card-body" id="dash-sustainability-body">
+                    <div class="sf-score-display" id="dash-sustainability-score">-- / 100</div>
+                    <p class="sf-sub-text" id="dash-sustainability-summary">Water efficiency indicator</p>
+                  </div>
+                  <div class="sf-card-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-nav-target="sustainability" data-i18n="sf.sustainabilityBtn">
+                      View Sustainability →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1.4 Bottom Grid: AI Farmer Assistant + Recent Activity -->
+            <div class="dash-bottom-grid">
+              
+              <!-- AI Farmer Assistant Card -->
+              <div class="dash-card dash-assistant-card" id="dash-assistant-card">
+                <div class="dash-card-header">
+                  <div class="dash-header-title-group">
+                    <div class="dash-card-icon-box icon-ai">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
+                    </div>
+                    <div>
+                      <h3 class="dash-card-title">AI Farmer Assistant</h3>
+                      <p class="dash-card-subtitle">Context-aware farming intelligence</p>
+                    </div>
+                  </div>
+                  <span class="sf-badge" id="dash-assistant-badge">AI Advisory</span>
+                </div>
+
+                <div class="dash-card-body">
+                  <div class="sf-metric-lead" id="dash-assistant-lead">Need help with your farm?</div>
+                  <p class="sf-sub-text" id="dash-assistant-summary">Ask questions about your crops, weather, or irrigation.</p>
+                  
+                  <div class="dash-assistant-chips">
+                    <button type="button" class="dash-query-chip" data-question="What are the best precautions for my primary crop?">
+                      Crop Precautions →
+                    </button>
+                    <button type="button" class="dash-query-chip" data-question="How should I manage my irrigation schedule?">
+                      Irrigation Guidance →
+                    </button>
+                  </div>
+                </div>
+
+                <div class="dash-card-footer">
+                  <button type="button" class="btn btn-primary btn-block" id="btn-dash-ask-assistant" data-nav-target="assistant">
+                    Ask AgriSmart →
+                  </button>
+                </div>
+              </div>
+
+              <!-- Recent Activity Section -->
+              <div class="dash-card dash-recent-card dash-recent-activity-section">
+                <div class="dash-card-header">
+                  <div>
+                    <h3 class="dash-card-title">Recent Activity</h3>
+                    <p class="dash-card-subtitle">Analyses performed in this active session</p>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm" data-nav-target="crop-health">
+                    New Analysis →
+                  </button>
+                </div>
+
+                <!-- Live History List -->
+                <div id="dash-recent-list" class="dash-activity-list"></div>
+
+                <!-- Empty State if no analyses yet -->
+                <div id="dash-recent-empty" class="empty-state-card">
+                  <div class="empty-state-icon">🌾</div>
+                  <h4 class="empty-state-title">No crop analysis yet</h4>
+                  <p class="empty-state-desc">Diagnosed crops and precautionary guidance will appear here.</p>
+                  <button type="button" class="btn btn-secondary btn-sm" data-nav-target="crop-health">
+                    Analyze Your First Crop
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </section>
+
+          <!-- ---------------------------------------------------------------
+               PAGE 2: MY FARM PROFILE (VIEW & IN-PLACE EDIT MODES)
+               --------------------------------------------------------------- -->
+          <section id="view-my-farm" class="view-section hidden" aria-hidden="true">
+            <div class="profile-details-card">
+              
+              <!-- 2.1 View Mode -->
+              <div id="farm-view-mode">
+                <div class="card-top-bar">
+                  <div>
+                    <h2 class="card-top-title">Farm Profile</h2>
+                    <p class="text-sm text-muted">Your registered land and crop specifications.</p>
+                  </div>
+                  <button type="button" class="btn btn-secondary" id="btn-edit-farm-profile">
+                    ✏ Edit Farm
+                  </button>
+                </div>
+
+                <div class="profile-fields-grid">
+                  <div class="profile-field-item">
+                    <span class="field-label">Farm / Land Name</span>
+                    <span class="field-value" id="farm-view-name">Not set</span>
+                  </div>
+                  <div class="profile-field-item">
+                    <span class="field-label">Farmer / Caretaker</span>
+                    <span class="field-value" id="farm-view-farmer">Not set</span>
+                  </div>
+                  <div class="profile-field-item">
+                    <span class="field-label">State</span>
+                    <span class="field-value" id="farm-view-state">Not set</span>
+                  </div>
+                  <div class="profile-field-item">
+                    <span class="field-label">District</span>
+                    <span class="field-value" id="farm-view-district">Not set</span>
+                  </div>
+                  <div class="profile-field-item">
+                    <span class="field-label">Primary Crop</span>
+                    <span class="field-value" id="farm-view-crop">Not set</span>
+                  </div>
+                  <div class="profile-field-item">
+                    <span class="field-label">Growth Stage</span>
+                    <span class="field-value" id="farm-view-stage">Not set</span>
+                  </div>
+                  <div class="profile-field-item">
+                    <span class="field-label">Soil Type</span>
+                    <span class="field-value" id="farm-view-soil">Not set</span>
+                  </div>
+                  <div class="profile-field-item">
+                    <span class="field-label">Farm Size</span>
+                    <span class="field-value" id="farm-view-acres">Not set</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2.2 Edit Mode -->
+              <div id="farm-edit-mode" class="hidden">
+                <div class="card-top-bar">
+                  <div>
+                    <h2 class="card-top-title">Edit Farm Information</h2>
+                    <p class="text-sm text-muted">Update your farm context to personalize recommendations.</p>
+                  </div>
+                </div>
+
+                <form id="farm-edit-form" novalidate>
+                  <div class="edit-fields-grid">
+                    <div class="form-group">
+                      <label for="edit-farm-name" class="form-label">Farm / Land Name *</label>
+                      <input type="text" id="edit-farm-name" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="edit-farmer-name" class="form-label">Farmer / Caretaker Name</label>
+                      <input type="text" id="edit-farmer-name" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="edit-farm-state" class="form-label">State *</label>
+                      <select id="edit-farm-state" class="form-select" required>
+                        <option value="">Select State</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="edit-farm-district" class="form-label">District *</label>
+                      <input type="text" id="edit-farm-district" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="edit-farm-crop" class="form-label">Primary Crop *</label>
+                      <select id="edit-farm-crop" class="form-select" required>
+                        <option value="">Select Crop</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="edit-farm-stage" class="form-label">Growth Stage</label>
+                      <select id="edit-farm-stage" class="form-select">
+                        <option value="">Select Stage (Optional)</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="edit-farm-soil" class="form-label">Soil Type</label>
+                      <select id="edit-farm-soil" class="form-select">
+                        <option value="">Select Soil Type (Optional)</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="edit-farm-acres" class="form-label">Farm Size (Acres)</label>
+                      <input type="number" id="edit-farm-acres" class="form-input" min="0.1" step="0.1" placeholder="e.g. 4.5">
+                    </div>
+                  </div>
+
+                  <div class="edit-form-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-farm-edit">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save-farm-edit">Save Farm Profile</button>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- ---------------------------------------------------------------
+               PAGE 3: CROP HEALTH (IMAGE UPLOAD & REAL PREDICTION WORKSPACE)
+               --------------------------------------------------------------- -->
+          <section id="view-crop-health" class="view-section hidden" aria-hidden="true">
+            
+            <!-- Page Header -->
+            <div class="page-title-banner">
+              <div>
+                <h2 class="page-main-heading">Crop Health & Disease Detection</h2>
+                <p class="page-subheading">Upload a clear photo of an affected crop leaf to receive an instant AI assessment and ICAR-backed precautions.</p>
+              </div>
+            </div>
+
+            <!-- Quality Guidance Banner -->
+            <div class="quality-guidance-pill" id="crop-quality-tips">
+              <span class="guidance-icon">💡</span>
+              <span class="guidance-text">
+                <strong>For best results:</strong> Capture the leaf in bright daylight • Keep leaf centered and in focus • Avoid blurry, dark, or obstructed photos.
+              </span>
+            </div>
+
+            <!-- Crop Context Selection (Optional Farm Context) -->
+            <div class="crop-context-card">
+              <div class="context-card-header">
+                <span class="context-title">🌾 Crop Context</span>
+                <span class="context-disclaimer">Optional context for farm records. The AI model analyzes the leaf image directly.</span>
+              </div>
+              <div class="context-fields-row">
+                <div class="form-group context-group">
+                  <label for="crop-context-select" class="form-label">Crop</label>
+                  <select id="crop-context-select" class="form-select">
+                    <option value="">Select Crop (Optional)</option>
+                    <option value="Rice">Rice / Paddy</option>
+                    <option value="Maize">Maize / Corn</option>
+                    <option value="Wheat">Wheat</option>
+                    <option value="Tomato">Tomato</option>
+                    <option value="Potato">Potato</option>
+                    <option value="Cotton">Cotton</option>
+                    <option value="Other">Other Crop</option>
+                  </select>
+                </div>
+
+                <div class="form-group context-group">
+                  <label for="growth-stage-select" class="form-label">Growth Stage</label>
+                  <select id="growth-stage-select" class="form-select">
+                    <option value="">Select Growth Stage (Optional)</option>
+                    <option value="Seedling">Seedling</option>
+                    <option value="Vegetative">Vegetative</option>
+                    <option value="Flowering">Flowering</option>
+                    <option value="Fruiting">Fruiting</option>
+                    <option value="Harvest">Harvest</option>
+                    <option value="Not sure">Not sure</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Upload Workspace Card -->
+            <div class="crop-upload-workspace">
+              
+              <!-- Hidden native inputs -->
+              <input type="file" id="crop-file-input" class="sr-only" accept=".jpg,.jpeg,.png,.webp" aria-label="Upload crop leaf photo">
+              <input type="file" id="crop-camera-input" class="sr-only" accept="image/*" capture="environment" aria-label="Take leaf photo with camera">
+
+              <!-- Drop Zone -->
+              <div class="upload-drop-zone" id="crop-drop-zone" tabindex="0" role="region" aria-label="Crop image upload zone">
+                
+                <!-- State A: Empty Drop Prompt -->
+                <div class="drop-prompt-content" id="crop-drop-prompt">
+                  <div class="drop-icon-circle">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="17 8 12 3 7 8"></polyline>
+                      <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                  </div>
+                  <h3 class="drop-main-title">Drag & drop a crop leaf photo here</h3>
+                  <p class="drop-sub-title">or choose a file from your device</p>
+                  
+                  <div class="drop-action-buttons">
+                    <button type="button" class="btn btn-primary" id="btn-crop-choose">
+                      📁 Choose Photo
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="btn-crop-take">
+                      📷 Take Photo
+                    </button>
+                  </div>
+
+                  <p class="drop-specs-label">Supported: JPG, JPEG, PNG, WEBP • Max 5 MB</p>
+                </div>
+
+                <!-- State B: Selected Photo Preview Card -->
+                <div class="preview-card-content hidden" id="crop-preview-card">
+                  <div class="preview-image-wrap">
+                    <img id="crop-image-preview" src="" alt="Selected crop leaf preview">
+                  </div>
+                  <div class="preview-meta-wrap">
+                    <div class="preview-file-info">
+                      <span class="preview-name" id="crop-file-name">leaf.jpg</span>
+                      <div class="preview-tags">
+                        <span class="preview-badge" id="crop-file-size">245 KB</span>
+                        <span class="preview-badge" id="crop-file-dims">640 × 480 px</span>
+                      </div>
+                    </div>
+                    <div class="preview-actions">
+                      <button type="button" class="btn btn-secondary btn-sm" id="btn-crop-change">
+                        🔄 Replace
+                      </button>
+                      <button type="button" class="btn btn-danger btn-sm" id="btn-crop-remove">
+                        🗑 Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Main Submit Button -->
+              <div class="upload-submit-wrap">
+                <button type="button" class="btn btn-primary btn-block btn-lg" id="btn-analyze-crop" disabled aria-disabled="true">
+                  <span id="analyze-btn-text">🔬 Check Crop Health</span>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- =============================================================
+                 DIAGNOSIS RESULT CARD (Populated on real /predict response)
+                 ============================================================= -->
+            <div id="crop-results-container" class="diagnosis-results-card hidden" role="region" aria-label="Diagnosis Results">
+              
+              <!-- Result Top Header -->
+              <div class="result-card-header">
+                <div class="result-header-left">
+                  <span class="diagnosis-badge" id="result-status-badge">
+                    <span>⚠️</span> <span>Disease Detected</span>
+                  </span>
+                  <h3 class="result-condition-name" id="result-condition-title">Rice — False Smut</h3>
+                </div>
+                <div class="result-header-right">
+                  <button type="button" class="btn btn-secondary btn-sm" id="btn-copy-result">
+                    📋 Copy Summary
+                  </button>
+                  <span id="copy-feedback" class="copy-success-tag hidden">✓ Copied!</span>
+                </div>
+              </div>
+
+              <!-- Model Confidence Row -->
+              <div class="result-confidence-card">
+                <div class="confidence-label-row">
+                  <span class="conf-title">Model confidence:</span>
+                  <strong class="conf-percent" id="result-confidence-val">--%</strong>
+                </div>
+                <div class="confidence-bar-wrap">
+                  <div class="confidence-bar-fill" id="result-confidence-bar" style="width: 0%;"></div>
+                </div>
+                <div class="confidence-notice text-warning hidden" id="result-confidence-note">
+                  Model confidence is relatively low. Consider taking another clear photo in bright daylight.
+                </div>
+              </div>
+
+              <!-- Observations & Symptoms -->
+              <div class="result-info-block">
+                <h4 class="info-block-title">What was detected</h4>
+                <p class="info-block-text" id="result-symptoms-text">
+                  Examining leaf discoloration, structural damage, and characteristic lesions.
+                </p>
+              </div>
+
+              <!-- Precautionary Actions -->
+              <div class="result-info-block">
+                <h4 class="info-block-title">Recommended Precaution & Action</h4>
+                <p class="info-block-text" id="result-prevention-text"></p>
+                
+                <div class="organic-tip-box">
+                  <span class="tip-icon">🌿</span>
+                  <div>
+                    <strong>Organic Care Tip:</strong>
+                    <span id="result-organic-text"></span>
+                  </div>
+                </div>
+
+                <div id="result-chemical-section" class="chemical-tip-box">
+                  <span class="tip-icon">🧪</span>
+                  <div>
+                    <strong>Chemical Treatment (ICAR-IASRI):</strong>
+                    <span id="result-chemical-text"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Farmer Advisory Section -->
+              <div id="result-hindi-section" class="result-info-block farmer-advisory-card">
+                <h4 class="info-block-title">🌾 Farmer Advisory</h4>
+                <p class="info-block-text" id="result-hindi-text"></p>
+              </div>
+
+              <!-- Expert Extension Disclaimer -->
+              <div class="expert-disclaimer-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span>Agricultural AI Advisory: Always verify chemical remedies with your local Krishi Vigyan Kendra (KVK) or agriculture officer before field application.</span>
+              </div>
+
+              <!-- Bottom Reset Action -->
+              <div class="result-actions-footer">
+                <button type="button" class="btn btn-primary" id="btn-analyze-another">
+                  📷 Analyze Another Crop
+                </button>
+                <button type="button" class="btn btn-secondary" id="btn-ask-assistant-crop">
+                  🤖 Ask AgriSmart About This Result
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Session Analysis History -->
+            <div class="crop-history-section">
+              <div class="section-heading-row">
+                <div>
+                  <h3 class="section-title">Session Analysis History</h3>
+                  <p class="section-subtitle">Analyses completed during this browser session.</p>
+                </div>
+              </div>
+
+              <div id="crop-history-list" class="history-cards-grid"></div>
+
+              <div id="crop-history-empty" class="history-empty-note text-muted">
+                No previous analyses in this session yet. Upload a leaf image above to check crop health.
+              </div>
+            </div>
+
+          </section>
+
+          <!-- ---------------------------------------------------------------
+               PAGE 4: WEATHER INTELLIGENCE MODULE
+               --------------------------------------------------------------- -->
+          <section id="view-weather" class="view-section hidden" aria-hidden="true">
+            <div id="weather-module-container"></div>
+          </section>
+
+          <!-- ---------------------------------------------------------------
+               PAGE 5: SMART IRRIGATION MODULE
+               --------------------------------------------------------------- -->
+          <section id="view-irrigation" class="view-section hidden" aria-hidden="true">
+            <div id="irrigation-module-container"></div>
+          </section>
+
+          <!-- ---------------------------------------------------------------
+               PAGE 6: SUSTAINABILITY & STEWARDSHIP MODULE
+               --------------------------------------------------------------- -->
+          <section id="view-sustainability" class="view-section hidden" aria-hidden="true">
+            <div id="sustainability-module-container"></div>
+          </section>
+
+          <!-- ---------------------------------------------------------------
+               PAGE 7: FARMER ASSISTANT MODULE (PART 4)
+               --------------------------------------------------------------- -->
+          <section id="view-assistant" class="view-section hidden" aria-hidden="true">
+            <div id="assistant-module-container"></div>
+          </section>
+
+          <!-- ---------------------------------------------------------------
+               PAGE 8: SETTINGS & PREFERENCES
+               --------------------------------------------------------------- -->
+          <section id="view-settings" class="view-section hidden" aria-hidden="true">
+            <div class="profile-details-card">
+              <div class="card-top-bar">
+                <h2 class="card-top-title">Settings & Preferences</h2>
+              </div>
+              <div style="margin-top: var(--space-6);">
+                <button type="button" class="btn btn-danger btn-trigger-logout">
+                  Log Out of Session
+                </button>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- Global Toast Notification Container -->
+  <div id="agri-toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- JavaScript Architecture -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/onboarding.js"></script>
+  <script src="js/components/weatherCard.js"></script>
+  <script src="js/components/irrigationCard.js"></script>
+  <script src="js/components/sustainabilityCard.js"></script>
+  <script src="js/components/assistantCard.js"></script>
+  <script src="js/components/dashboard.js"></script>
+  <script src="js/components/myFarm.js"></script>
+  <script src="js/components/cropHealth.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
