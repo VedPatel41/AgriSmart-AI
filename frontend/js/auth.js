@@ -86,7 +86,10 @@ const AgriAuth = {
       district: "",
       village: "",
       primaryCrop: "",
+      growthStage: "",
       soilType: "",
+      soilPh: "",
+      manualSoilMoisture: "",
       farmSizeAcres: ""
     };
   },
@@ -160,7 +163,10 @@ const AgriAuth = {
           district: "Ahmedabad",
           village: "Dholka",
           primaryCrop: "Rice",
+          growthStage: "Vegetative",
           soilType: "Alluvial Loam",
+          soilPh: "6.8",
+          manualSoilMoisture: "28",
           farmSizeAcres: "4.5"
         });
       }

@@ -67,7 +67,7 @@ class AgriWeatherCard {
         <div class="page-title-banner">
           <div>
             <h2 class="page-main-heading" data-i18n="weather.title">Weather Intelligence</h2>
-            <p class="page-subheading" data-i18n="weather.subtitle">Weather near your farm grounded in real meteorological observations.</p>
+            <p class="page-subheading" data-i18n="weather.subtitle">Live weather information for your farm location.</p>
           </div>
         </div>
 
@@ -333,11 +333,14 @@ class AgriWeatherCard {
     const refreshBtn = this.container ? this.container.querySelector("#btn-weather-refresh") : null;
     if (!refreshBtn) return;
     const icon = refreshBtn.querySelector(".refresh-icon");
+    const textSpan = refreshBtn.querySelector("[data-i18n='weather.refreshBtn']") || refreshBtn.querySelector("span:last-child");
     if (isSpinning) {
       if (icon) icon.classList.add("spinning");
+      if (textSpan) textSpan.textContent = "Refreshing...";
       refreshBtn.disabled = true;
     } else {
       if (icon) icon.classList.remove("spinning");
+      if (textSpan) textSpan.textContent = "Refresh Weather";
       refreshBtn.disabled = false;
     }
   }
@@ -435,62 +438,50 @@ class AgriWeatherCard {
           </div>
         </div>
 
-        <!-- Next 24 Hours Forecast Section -->
+        <!-- RAINFALL OUTLOOK (Next 24 Hours) -->
         <div class="weather-forecast-strip">
           <div class="forecast-strip-header">
-            <h4 class="forecast-strip-title" data-i18n="weather.next24h">NEXT 24 HOURS</h4>
-            <span class="forecast-rain-pill">
-              Rain probability: <strong>${rainChanceDisplay}</strong>
-            </span>
+            <h4 class="forecast-strip-title" data-i18n="weather.next24h">RAINFALL OUTLOOK</h4>
+            <span class="forecast-window-tag">Next 24 hours</span>
           </div>
-          <div class="forecast-timeline-preview">
-            <div class="timeline-slot">
-              <span class="slot-time">Morning</span>
-              <span class="slot-icon">⛅</span>
-              <span class="slot-desc">Conditions favorable</span>
+          <div class="rainfall-outlook-card">
+            <div class="rainfall-outlook-main">
+              <span class="rainfall-outlook-icon" aria-hidden="true">🌧️</span>
+              <div class="rainfall-outlook-meta">
+                <span class="rainfall-outlook-label">Rain probability</span>
+                <strong class="rainfall-outlook-value">${rainChanceDisplay}</strong>
+              </div>
             </div>
-            <div class="timeline-slot">
-              <span class="slot-time">Afternoon</span>
-              <span class="slot-icon">🌤️</span>
-              <span class="slot-desc">Thermal peak</span>
-            </div>
-            <div class="timeline-slot">
-              <span class="slot-time">Evening</span>
-              <span class="slot-icon">☁️</span>
-              <span class="slot-desc">Decreased wind</span>
-            </div>
-            <div class="timeline-slot">
-              <span class="slot-time">Night</span>
-              <span class="slot-icon">🌙</span>
-              <span class="slot-desc">Cooling period</span>
-            </div>
+            <p class="rainfall-outlook-desc">
+              ${fc.forecast_available && typeof fc.rain_probability_24h === "number"
+                ? (fc.rain_probability_24h > 60
+                    ? "Rain is likely over the next 24 hours. Consider postponing scheduled irrigation until rainfall is measured."
+                    : (fc.rain_probability_24h >= 30
+                        ? "Moderate rainfall likelihood. Check local soil moisture before operating irrigation pumps."
+                        : "Low chance of rain. Field moisture relies primarily on scheduled irrigation."))
+                : "Live rainfall forecast is currently unavailable from the weather provider."}
+            </p>
           </div>
         </div>
 
-        <!-- Crop Weather Risk Advisory Box -->
+        <!-- FARM WEATHER INSIGHT -->
         <div class="weather-risk-box risk-${riskLevel.toLowerCase()}">
           <div class="risk-box-header">
-            <span class="risk-label-tag">Crop Weather Risk:</span>
+            <span class="risk-label-tag">FARM WEATHER INSIGHT</span>
             <span class="risk-badge badge-${riskLevel.toLowerCase()}">
-              <strong class="risk-level-text">${riskLevel} Risk</strong>
+              <strong class="risk-level-text">${riskLevel} Disease Risk</strong>
             </span>
           </div>
           <p class="risk-reason-text">
-            <strong class="risk-why-label">Why? </strong>
+            <strong class="risk-why-label">Agronomic Insight: </strong>
             ${this.escapeHtml(risk.reason)}
           </p>
         </div>
 
-        <!-- Farm Weather Note -->
-        <div class="weather-farm-note">
-          <span class="note-icon">ℹ️</span>
-          <span class="note-text">"Weather conditions can affect irrigation decisions. Check Smart Irrigation before turning on pumps."</span>
-        </div>
-
         <!-- Assistant Cross-Module CTA -->
-        <div class="weather-assistant-cta" style="margin-top: var(--space-4); text-align: right;">
+        <div class="weather-assistant-cta" style="margin-top: var(--space-4); display: flex; justify-content: flex-end;">
           <button type="button" class="btn btn-secondary btn-sm" id="btn-ask-assistant-weather">
-            🤖 Ask About My Weather
+            🤖 Ask AgriSmart
           </button>
         </div>
 

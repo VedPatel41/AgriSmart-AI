@@ -1,24 +1,43 @@
 # Environment variables and API keys
 .env
+.envrc
+.streamlit/secrets.toml
 
 # Python bytecode and caches
 __pycache__/
-*.py[cod]
+*.py[codz]
 *$py.class
 .pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
 
 # Virtual environments
 venv/
 env/
 ENV/
 .venv/
+env.bak/
+venv.bak/
 
-# Temporary files
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Temporary files & logs
 tmp/
 *.tmp
+*.log
+pip-log.txt
 
 # IDEs and OS files
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+tempCodeRunnerFile.py
+
+# Jupyter Notebook
+.ipynb_checkpoints

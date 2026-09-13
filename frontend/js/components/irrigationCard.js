@@ -46,8 +46,8 @@ class AgriIrrigationCard {
       <div class="irrigation-page-wrapper">
         <div class="page-title-banner">
           <div>
-            <h2 class="page-main-heading" data-i18n="irrigation.title">Smart Irrigation Advisory</h2>
-            <p class="page-subheading" data-i18n="irrigation.subtitle">Make a better watering decision based on soil moisture and rainfall forecast.</p>
+            <h2 class="page-main-heading" data-i18n="irrigation.title">Smart Irrigation</h2>
+            <p class="page-subheading" data-i18n="irrigation.subtitle">Make a watering decision using soil moisture and rainfall forecast.</p>
           </div>
         </div>
 
@@ -76,7 +76,7 @@ class AgriIrrigationCard {
             <div class="irrigation-field-row">
               <div class="irrigation-input-group">
                 <label for="soil-moisture-input" class="irrigation-label" data-i18n="irrigation.moistureLabel">
-                  Current Soil Moisture (%)
+                  Current Soil Moisture (manual)
                 </label>
                 <div class="irrigation-input-wrapper">
                   <input 
@@ -86,13 +86,13 @@ class AgriIrrigationCard {
                     min="0" 
                     max="100" 
                     step="0.5" 
-                    placeholder="e.g. 25" 
+                    placeholder="Enter percentage (e.g. 25)" 
                     required
                     aria-describedby="soil-input-help"
                   />
                   <span class="input-unit-symbol" aria-hidden="true">%</span>
                 </div>
-                <span id="soil-input-help" class="input-sub-hint" data-i18n="irrigation.moistureHelp">Manual soil moisture input between 0% and 100%</span>
+                <span id="soil-input-help" class="input-sub-hint" data-i18n="irrigation.moistureHelp">Enter your measured soil moisture level between 0% and 100%</span>
               </div>
 
               <!-- Connected Next 24h Rain Indicator from Weather Module -->
@@ -268,14 +268,14 @@ class AgriIrrigationCard {
 
     // 1. Strict Validation: reject empty, negative, > 100, non-numeric
     if (rawVal === "") {
-      this.showError("Enter soil moisture between 0% and 100%.");
+      this.showError("Enter a soil moisture value between 0% and 100%.");
       soilInput.focus();
       return;
     }
 
     const numericVal = parseFloat(rawVal);
     if (isNaN(numericVal) || !isFinite(numericVal) || numericVal < 0 || numericVal > 100) {
-      this.showError("Enter soil moisture between 0% and 100%.");
+      this.showError("Enter a soil moisture value between 0% and 100%.");
       soilInput.focus();
       return;
     }
@@ -407,7 +407,7 @@ class AgriIrrigationCard {
         <!-- Assistant Cross-Module CTA -->
         <div class="irrigation-assistant-cta" style="margin-top: var(--space-4); text-align: right;">
           <button type="button" class="btn btn-secondary btn-sm" id="btn-ask-assistant-irrigation">
-            🤖 Ask Why (Explain with AI)
+            🤖 Ask AgriSmart
           </button>
         </div>
 
@@ -427,11 +427,13 @@ class AgriIrrigationCard {
         <div class="irrigation-error-box state-weather-needed" role="alert">
           <span class="err-icon" aria-hidden="true">🌧️</span>
           <div class="err-text-wrap">
-            <h4 class="err-title">Rain forecast unavailable</h4>
-            <p class="err-desc">Irrigation recommendation cannot be reliably calculated without real weather data.</p>
-            <button type="button" class="btn btn-secondary btn-sm" id="btn-goto-weather">
-              View Weather Module →
-            </button>
+            <h4 class="err-title">Irrigation recommendation unavailable</h4>
+            <p class="err-desc">Live rainfall forecast is required to evaluate irrigation.</p>
+            <div style="display: flex; gap: var(--space-2); margin-top: var(--space-3);">
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-goto-weather">
+                View Weather →
+              </button>
+            </div>
           </div>
         </div>
       `;
@@ -440,7 +442,7 @@ class AgriIrrigationCard {
         <div class="irrigation-error-box" role="alert">
           <span class="err-icon" aria-hidden="true">⚠️</span>
           <div class="err-text-wrap">
-            <h4 class="err-title">We couldn't calculate the irrigation recommendation</h4>
+            <h4 class="err-title">Unable to calculate irrigation advice</h4>
             <p class="err-desc">${this.escapeHtml(errorMsg)}</p>
           </div>
         </div>
@@ -472,7 +474,7 @@ class AgriIrrigationCard {
     if (submitBtn) {
       if (isLoading) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `<span class="btn-spinner" aria-hidden="true">⏳</span> Checking conditions...`;
+        submitBtn.innerHTML = `<span class="btn-spinner" aria-hidden="true">⏳</span> Checking irrigation conditions...`;
       } else {
         submitBtn.disabled = false;
         submitBtn.innerHTML = `<span class="btn-text">Check Irrigation</span>`;

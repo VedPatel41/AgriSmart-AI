@@ -739,8 +739,8 @@
                   </div>
                   <h4 class="sf-card-title" data-i18n="sf.sustainabilityCardTitle">Sustainability</h4>
                   <div class="sf-card-body" id="dash-sustainability-body">
-                    <div class="sf-score-display" id="dash-sustainability-score">-- / 100</div>
-                    <p class="sf-sub-text" id="dash-sustainability-summary">Water efficiency indicator</p>
+                    <div class="sf-score-display" id="dash-sustainability-score">Not evaluated</div>
+                    <p class="sf-sub-text" id="dash-sustainability-summary">Calculate in Sustainability module</p>
                   </div>
                   <div class="sf-card-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-nav-target="sustainability" data-i18n="sf.sustainabilityBtn">
@@ -824,121 +824,207 @@
                PAGE 2: MY FARM PROFILE (VIEW & IN-PLACE EDIT MODES)
                --------------------------------------------------------------- -->
           <section id="view-my-farm" class="view-section hidden" aria-hidden="true">
-            <div class="profile-details-card">
+            <div class="my-farm-page-wrapper">
               
-              <!-- 2.1 View Mode -->
-              <div id="farm-view-mode">
-                <div class="card-top-bar">
-                  <div>
-                    <h2 class="card-top-title">Farm Profile</h2>
-                    <p class="text-sm text-muted">Your registered land and crop specifications.</p>
+              <!-- Page Header -->
+              <div class="page-title-banner my-farm-header-banner">
+                <div class="my-farm-header-left">
+                  <div class="my-farm-badge-row">
+                    <span class="module-icon" aria-hidden="true">🌱</span>
+                    <span class="track-badge live-badge">Farm Context</span>
+                    <span class="profile-completion-badge" id="farm-completion-badge">
+                      <span class="completion-dot"></span>
+                      <span class="completion-text">Basic Profile Complete</span>
+                    </span>
                   </div>
+                  <h2 class="page-main-heading">My Farm</h2>
+                  <p class="page-subheading">Manage the basic information used to personalize your AgriSmart AI insights.</p>
+                </div>
+                <div class="my-farm-header-actions" id="farm-header-actions-view">
                   <button type="button" class="btn btn-secondary" id="btn-edit-farm-profile">
                     ✏ Edit Farm
                   </button>
                 </div>
+              </div>
 
-                <div class="profile-fields-grid">
-                  <div class="profile-field-item">
-                    <span class="field-label">Farm / Land Name</span>
-                    <span class="field-value" id="farm-view-name">Not set</span>
+              <!-- 2.1 View Mode -->
+              <div id="farm-view-mode">
+                <div class="my-farm-sections-grid">
+                  
+                  <!-- Section 1: Farm Profile -->
+                  <div class="my-farm-card">
+                    <div class="my-farm-card-header">
+                      <div class="card-header-icon-title">
+                        <span class="card-section-icon" aria-hidden="true">🏡</span>
+                        <div>
+                          <h3 class="my-farm-card-title">FARM PROFILE</h3>
+                          <p class="my-farm-card-sub">Identity and geographic location</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="my-farm-fields-list">
+                      <div class="my-farm-field-item">
+                        <span class="field-label">Farm / Land Name</span>
+                        <span class="field-value" id="farm-view-name">Not set</span>
+                      </div>
+                      <div class="my-farm-field-item">
+                        <span class="field-label">Farmer / Caretaker</span>
+                        <span class="field-value" id="farm-view-farmer">Not set</span>
+                      </div>
+                      <div class="my-farm-field-item">
+                        <span class="field-label">State</span>
+                        <span class="field-value" id="farm-view-state">Not set</span>
+                      </div>
+                      <div class="my-farm-field-item">
+                        <span class="field-label">District</span>
+                        <span class="field-value" id="farm-view-district">Not set</span>
+                      </div>
+                    </div>
                   </div>
-                  <div class="profile-field-item">
-                    <span class="field-label">Farmer / Caretaker</span>
-                    <span class="field-value" id="farm-view-farmer">Not set</span>
+
+                  <!-- Section 2: Crop Context -->
+                  <div class="my-farm-card">
+                    <div class="my-farm-card-header">
+                      <div class="card-header-icon-title">
+                        <span class="card-section-icon" aria-hidden="true">🌾</span>
+                        <div>
+                          <h3 class="my-farm-card-title">CROP CONTEXT</h3>
+                          <p class="my-farm-card-sub">Current planting and growth stage</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="my-farm-fields-list">
+                      <div class="my-farm-field-item">
+                        <span class="field-label">Primary Crop</span>
+                        <span class="field-value" id="farm-view-crop">Not set</span>
+                      </div>
+                      <div class="my-farm-field-item">
+                        <span class="field-label">Growth Stage</span>
+                        <span class="field-value" id="farm-view-stage">Not set</span>
+                      </div>
+                    </div>
+                    <div class="crop-context-note">
+                      <span class="note-icon" aria-hidden="true">ℹ</span>
+                      <span>Primary crop provides contextual grounding for disease diagnosis, weather risks, and irrigation advisories.</span>
+                    </div>
                   </div>
-                  <div class="profile-field-item">
-                    <span class="field-label">State</span>
-                    <span class="field-value" id="farm-view-state">Not set</span>
+
+                  <!-- Section 3: Field Conditions -->
+                  <div class="my-farm-card">
+                    <div class="my-farm-card-header">
+                      <div class="card-header-icon-title">
+                        <span class="card-section-icon" aria-hidden="true">🪴</span>
+                        <div>
+                          <h3 class="my-farm-card-title">FIELD CONDITIONS</h3>
+                          <p class="my-farm-card-sub">Soil characteristics and land area</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="my-farm-fields-list">
+                      <div class="my-farm-field-item">
+                        <span class="field-label">Soil Type</span>
+                        <span class="field-value" id="farm-view-soil">Not set</span>
+                      </div>
+                      <div class="my-farm-field-item">
+                        <span class="field-label">Soil pH</span>
+                        <span class="field-value" id="farm-view-ph">Not set</span>
+                      </div>
+                      <div class="my-farm-field-item">
+                        <span class="field-label">Soil Moisture — Manual input</span>
+                        <span class="field-value" id="farm-view-moisture">Not entered</span>
+                      </div>
+                      <div class="my-farm-field-item">
+                        <span class="field-label">Farm Size</span>
+                        <span class="field-value" id="farm-view-acres">Not set</span>
+                      </div>
+                    </div>
+                    <div class="field-condition-notice">
+                      <span class="notice-icon" aria-hidden="true">💧</span>
+                      <span><strong>Manual Soil Moisture:</strong> Measured in field (0%–100%). Used as truth for Smart Irrigation recommendations (no IoT sensors required).</span>
+                    </div>
                   </div>
-                  <div class="profile-field-item">
-                    <span class="field-label">District</span>
-                    <span class="field-value" id="farm-view-district">Not set</span>
-                  </div>
-                  <div class="profile-field-item">
-                    <span class="field-label">Primary Crop</span>
-                    <span class="field-value" id="farm-view-crop">Not set</span>
-                  </div>
-                  <div class="profile-field-item">
-                    <span class="field-label">Growth Stage</span>
-                    <span class="field-value" id="farm-view-stage">Not set</span>
-                  </div>
-                  <div class="profile-field-item">
-                    <span class="field-label">Soil Type</span>
-                    <span class="field-value" id="farm-view-soil">Not set</span>
-                  </div>
-                  <div class="profile-field-item">
-                    <span class="field-label">Farm Size</span>
-                    <span class="field-value" id="farm-view-acres">Not set</span>
-                  </div>
+
                 </div>
               </div>
 
               <!-- 2.2 Edit Mode -->
               <div id="farm-edit-mode" class="hidden">
-                <div class="card-top-bar">
-                  <div>
-                    <h2 class="card-top-title">Edit Farm Information</h2>
-                    <p class="text-sm text-muted">Update your farm context to personalize recommendations.</p>
+                <div class="profile-details-card edit-card-wrapper">
+                  <div class="card-top-bar">
+                    <div>
+                      <h2 class="card-top-title">Edit Farm Information</h2>
+                      <p class="text-sm text-muted">Update your farm context to personalize recommendations across all modules.</p>
+                    </div>
                   </div>
+
+                  <form id="farm-edit-form" novalidate>
+                    <div class="edit-fields-grid">
+                      <div class="form-group">
+                        <label for="edit-farm-name" class="form-label">Farm / Land Name *</label>
+                        <input type="text" id="edit-farm-name" class="form-input" required placeholder="e.g. Patel Krishi Farm">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="edit-farmer-name" class="form-label">Farmer / Caretaker Name</label>
+                        <input type="text" id="edit-farmer-name" class="form-input" placeholder="e.g. Ramesh Patel">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="edit-farm-state" class="form-label">State *</label>
+                        <select id="edit-farm-state" class="form-select" required>
+                          <option value="">Select State</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="edit-farm-district" class="form-label">District *</label>
+                        <input type="text" id="edit-farm-district" class="form-input" required placeholder="e.g. Ahmedabad">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="edit-farm-crop" class="form-label">Primary Crop *</label>
+                        <select id="edit-farm-crop" class="form-select" required>
+                          <option value="">Select Crop</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="edit-farm-stage" class="form-label">Growth Stage</label>
+                        <select id="edit-farm-stage" class="form-select">
+                          <option value="">Select Stage (Optional)</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="edit-farm-soil" class="form-label">Soil Type</label>
+                        <select id="edit-farm-soil" class="form-select">
+                          <option value="">Select Soil Type (Optional)</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="edit-farm-ph" class="form-label">Soil pH (0–14)</label>
+                        <input type="number" id="edit-farm-ph" class="form-input" min="0" max="14" step="0.1" placeholder="e.g. 6.8">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="edit-farm-moisture" class="form-label">Soil Moisture (%) — Manual</label>
+                        <input type="number" id="edit-farm-moisture" class="form-input" min="0" max="100" step="0.5" placeholder="e.g. 28">
+                        <span class="form-field-hint">Manual field measurement used for Smart Irrigation advisory</span>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="edit-farm-acres" class="form-label">Farm Size (Acres)</label>
+                        <input type="number" id="edit-farm-acres" class="form-input" min="0.1" step="0.1" placeholder="e.g. 4.5">
+                      </div>
+                    </div>
+
+                    <div class="edit-form-actions">
+                      <button type="button" class="btn btn-secondary" id="btn-cancel-farm-edit">Cancel</button>
+                      <button type="submit" class="btn btn-primary" id="btn-save-farm-edit">Save Farm Profile</button>
+                    </div>
+                  </form>
                 </div>
-
-                <form id="farm-edit-form" novalidate>
-                  <div class="edit-fields-grid">
-                    <div class="form-group">
-                      <label for="edit-farm-name" class="form-label">Farm / Land Name *</label>
-                      <input type="text" id="edit-farm-name" class="form-input" required>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="edit-farmer-name" class="form-label">Farmer / Caretaker Name</label>
-                      <input type="text" id="edit-farmer-name" class="form-input">
-                    </div>
-
-                    <div class="form-group">
-                      <label for="edit-farm-state" class="form-label">State *</label>
-                      <select id="edit-farm-state" class="form-select" required>
-                        <option value="">Select State</option>
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="edit-farm-district" class="form-label">District *</label>
-                      <input type="text" id="edit-farm-district" class="form-input" required>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="edit-farm-crop" class="form-label">Primary Crop *</label>
-                      <select id="edit-farm-crop" class="form-select" required>
-                        <option value="">Select Crop</option>
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="edit-farm-stage" class="form-label">Growth Stage</label>
-                      <select id="edit-farm-stage" class="form-select">
-                        <option value="">Select Stage (Optional)</option>
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="edit-farm-soil" class="form-label">Soil Type</label>
-                      <select id="edit-farm-soil" class="form-select">
-                        <option value="">Select Soil Type (Optional)</option>
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="edit-farm-acres" class="form-label">Farm Size (Acres)</label>
-                      <input type="number" id="edit-farm-acres" class="form-input" min="0.1" step="0.1" placeholder="e.g. 4.5">
-                    </div>
-                  </div>
-
-                  <div class="edit-form-actions">
-                    <button type="button" class="btn btn-secondary" id="btn-cancel-farm-edit">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="btn-save-farm-edit">Save Farm Profile</button>
-                  </div>
-                </form>
               </div>
 
             </div>
@@ -1075,33 +1161,46 @@
                  ============================================================= -->
             <div id="crop-results-container" class="diagnosis-results-card hidden" role="region" aria-label="Diagnosis Results">
               
-              <!-- Result Top Header -->
-              <div class="result-card-header">
-                <div class="result-header-left">
-                  <span class="diagnosis-badge" id="result-status-badge">
-                    <span>⚠️</span> <span>Disease Detected</span>
-                  </span>
-                  <h3 class="result-condition-name" id="result-condition-title">Rice — False Smut</h3>
+              <!-- Result Top Header with Analyzed Leaf Specimen Preview -->
+              <div class="result-split-header">
+                <!-- Left: Analyzed Leaf Preview -->
+                <div class="result-leaf-preview-box">
+                  <div class="result-leaf-img-wrap">
+                    <img id="result-leaf-preview" class="result-leaf-img" src="" alt="Analyzed crop leaf specimen">
+                  </div>
+                  <span class="analyzed-leaf-tag">Analyzed Leaf Specimen</span>
                 </div>
-                <div class="result-header-right">
-                  <button type="button" class="btn btn-secondary btn-sm" id="btn-copy-result">
-                    📋 Copy Summary
-                  </button>
-                  <span id="copy-feedback" class="copy-success-tag hidden">✓ Copied!</span>
-                </div>
-              </div>
 
-              <!-- Model Confidence Row -->
-              <div class="result-confidence-card">
-                <div class="confidence-label-row">
-                  <span class="conf-title">Model confidence:</span>
-                  <strong class="conf-percent" id="result-confidence-val">--%</strong>
-                </div>
-                <div class="confidence-bar-wrap">
-                  <div class="confidence-bar-fill" id="result-confidence-bar" style="width: 0%;"></div>
-                </div>
-                <div class="confidence-notice text-warning hidden" id="result-confidence-note">
-                  Model confidence is relatively low. Consider taking another clear photo in bright daylight.
+                <!-- Right: Diagnosis & Confidence Summary -->
+                <div class="result-summary-box">
+                  <div class="result-card-header">
+                    <div class="result-header-left">
+                      <span class="diagnosis-badge" id="result-status-badge">
+                        <span>⚠️</span> <span>Disease Detected</span>
+                      </span>
+                      <h3 class="result-condition-name" id="result-condition-title">Rice — False Smut</h3>
+                    </div>
+                    <div class="result-header-right">
+                      <button type="button" class="btn btn-secondary btn-sm" id="btn-copy-result">
+                        📋 Copy Summary
+                      </button>
+                      <span id="copy-feedback" class="copy-success-tag hidden">✓ Copied!</span>
+                    </div>
+                  </div>
+
+                  <!-- Model Confidence Card -->
+                  <div class="result-confidence-card">
+                    <div class="confidence-label-row">
+                      <span class="conf-title">Model confidence:</span>
+                      <strong class="conf-percent" id="result-confidence-val">--%</strong>
+                    </div>
+                    <div class="confidence-bar-wrap">
+                      <div class="confidence-bar-fill" id="result-confidence-bar" style="width: 0%;"></div>
+                    </div>
+                    <div class="confidence-notice text-warning hidden" id="result-confidence-note">
+                      Model confidence is relatively low. Consider taking another clear photo in bright daylight.
+                    </div>
+                  </div>
                 </div>
               </div>
 

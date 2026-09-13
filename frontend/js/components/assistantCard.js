@@ -91,8 +91,8 @@ class AgriAssistantCard {
               <span class="assistant-icon" aria-hidden="true">🤖</span>
               <span class="track-badge live-badge">AI Farmer Companion</span>
             </div>
-            <h2 class="assistant-main-title">AgriSmart AI Assistant</h2>
-            <p class="assistant-sub-title">Your knowledgeable digital farming companion • Ask about crop health, weather, irrigation, or eco score.</p>
+            <h2 class="assistant-main-title">AgriSmart Assistant</h2>
+            <p class="assistant-sub-title">Get guidance based on your crop, health, weather and farm data.</p>
           </div>
           <div class="banner-actions-area">
             <button type="button" class="btn btn-secondary btn-sm btn-clear-chat" id="btn-assistant-clear" title="Clear conversation history">
@@ -241,10 +241,10 @@ class AgriAssistantCard {
     const cropName = crop.name || "Not set";
     const growthStage = crop.growthStage || "Not set";
 
-    const diagText = diag ? `${diag.class_label.replace(/_/g, ' ')} (${Math.round((diag.confidence || 0) * 100)}% conf)` : "Not scanned yet";
-    const weatherText = weather ? `${weather.temperature !== undefined ? `${weather.temperature}°C` : ''} • ${weather.condition || 'Available'} • Rain: ${weather.rain_probability_24h !== undefined ? `${weather.rain_probability_24h}%` : 'N/A'}` : "Not loaded";
-    const irrText = irr ? `${irr.recommendation} (Soil: ${irr.soil_moisture !== undefined ? `${irr.soil_moisture}%` : 'N/A'})` : "Soil moisture not entered";
-    const sustText = sust ? `${sust.score} / 100 (${sust.rating || 'Evaluated'})` : "Not calculated";
+    const diagText = (diag && diag.class_label) ? `${diag.class_label.replace(/_/g, ' ')} (${Math.round((diag.confidence || 0) * 100)}% conf)` : "Not available";
+    const weatherText = (weather && (weather.temperature !== undefined || weather.condition)) ? `${weather.temperature !== undefined ? `${weather.temperature}°C` : ''} • ${weather.condition || 'Available'} • Rain: ${weather.rain_probability_24h !== undefined ? `${weather.rain_probability_24h}%` : 'N/A'}` : "Not available";
+    const irrText = (irr && irr.recommendation) ? `${irr.recommendation} (Soil: ${irr.soil_moisture !== undefined ? `${irr.soil_moisture}%` : 'N/A'})` : "Not available";
+    const sustText = (sust && sust.score !== undefined) ? `${sust.score} / 100 (${sust.rating || 'Evaluated'})` : "Not available";
 
     return `
       <div class="snapshot-row">
@@ -256,11 +256,11 @@ class AgriAssistantCard {
         <strong class="snap-val">${this.escapeHtml(farmLoc)}</strong>
       </div>
       <div class="snapshot-row">
-        <span class="snap-label">Crop & Stage:</span>
+        <span class="snap-label">Current Crop:</span>
         <strong class="snap-val">${this.escapeHtml(cropName)} • ${this.escapeHtml(growthStage)}</strong>
       </div>
       <div class="snapshot-row ${diag ? 'has-data' : 'empty-data'}">
-        <span class="snap-label">Latest Diagnosis:</span>
+        <span class="snap-label">Crop Health:</span>
         <strong class="snap-val">${this.escapeHtml(diagText)}</strong>
       </div>
       <div class="snapshot-row ${weather ? 'has-data' : 'empty-data'}">
@@ -268,7 +268,7 @@ class AgriAssistantCard {
         <strong class="snap-val">${this.escapeHtml(weatherText)}</strong>
       </div>
       <div class="snapshot-row ${irr ? 'has-data' : 'empty-data'}">
-        <span class="snap-label">Irrigation Advice:</span>
+        <span class="snap-label">Irrigation:</span>
         <strong class="snap-val">${this.escapeHtml(irrText)}</strong>
       </div>
       <div class="snapshot-row ${sust ? 'has-data' : 'empty-data'}">
@@ -281,31 +281,32 @@ class AgriAssistantCard {
   getAdaptiveQuickQuestions(ctx, lang) {
     const questions = [];
 
-    // Diagnosis questions
+    // Diagnosis questions (only if diagnosis exists)
     if (ctx.diagnosis && ctx.diagnosis.class_label) {
-      questions.push("Explain my crop diagnosis and remedies");
-      questions.push("What organic care is best for this condition?");
+      questions.push("What does my crop health result mean?");
+      questions.push("What precautions should I take for this disease?");
     }
 
-    // Irrigation questions
+    // Irrigation questions (only if irrigation recommendation exists)
     if (ctx.irrigation && ctx.irrigation.recommendation) {
-      questions.push("Why was this irrigation recommendation given?");
+      questions.push("Should I irrigate my crop today?");
     }
 
-    // Weather questions
+    // Weather questions (only if weather data exists)
     if (ctx.weather && (ctx.weather.temperature !== undefined || ctx.weather.city)) {
-      questions.push("What does today's weather mean for my farm?");
+      questions.push("Explain today's weather for my farm.");
     }
 
-    // Sustainability questions
+    // Sustainability questions (only if sustainability score exists)
     if (ctx.sustainability && ctx.sustainability.score !== undefined) {
       questions.push("How can I improve my sustainability score?");
     }
 
-    // Fallbacks if some modules are missing
-    if (questions.length < 3) {
-      if (!ctx.diagnosis) questions.push("How do I check my crop health?");
-      if (!ctx.irrigation) questions.push("When is the best time to irrigate?");
+    // General agricultural fallback questions only when farm telemetry is missing
+    if (questions.length === 0) {
+      questions.push("What services does AgriSmart provide for my farm?");
+      questions.push("How do I scan a crop leaf to detect disease?");
+      questions.push("How does Smart Irrigation help conserve water?");
     }
 
     return questions.slice(0, 4);

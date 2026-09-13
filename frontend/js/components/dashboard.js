@@ -361,8 +361,8 @@ const AgriDashboard = {
         this.dashSustainabilityScore.textContent = `${sustData.score} / 100`;
         this.dashSustainabilitySummary.textContent = `Rating: ${sustData.rating} • Water efficiency: ${sustData.breakdown.water_efficiency}/100`;
       } else {
-        this.dashSustainabilityScore.textContent = "-- / 100";
-        this.dashSustainabilitySummary.textContent = "Not evaluated yet. Calculate in Sustainability module.";
+        this.dashSustainabilityScore.textContent = "Not evaluated";
+        this.dashSustainabilitySummary.textContent = "Calculate in Sustainability module.";
       }
     }
 

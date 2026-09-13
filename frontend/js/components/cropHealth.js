@@ -55,6 +55,7 @@ const AgriCropHealth = {
 
     // Results container
     this.resultsCard = document.getElementById("crop-results-container");
+    this.resultLeafImg = document.getElementById("result-leaf-preview");
     this.resultBadge = document.getElementById("result-status-badge");
     this.resultTitle = document.getElementById("result-condition-title");
     this.confidenceVal = document.getElementById("result-confidence-val");
@@ -331,6 +332,11 @@ const AgriCropHealth = {
     if (this.dropZone) this.dropZone.classList.remove("has-preview");
 
     if (this.resultsCard) this.resultsCard.classList.add("hidden");
+    if (this.resultLeafImg) this.resultLeafImg.src = "";
+
+    if (window.AgriState && typeof window.AgriState.resetForNewCrop === "function") {
+      window.AgriState.resetForNewCrop();
+    }
 
     if (this.btnAnalyze) {
       this.btnAnalyze.disabled = true;
@@ -384,6 +390,11 @@ const AgriCropHealth = {
     const advisory = raw.advisory || data.advisory || {};
 
     const isHealthy = classLabel.toLowerCase().includes("healthy");
+
+    // Display analyzed leaf thumbnail in result specimen preview
+    if (this.resultLeafImg && this.previewUrl) {
+      this.resultLeafImg.src = this.previewUrl;
+    }
 
     // Context selected
     const selectedCrop = this.cropSelect ? this.cropSelect.value : "";
@@ -504,6 +515,11 @@ const AgriCropHealth = {
     this.resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
 
     AgriUI.showToast("Crop analysis complete!", "success");
+
+    // Sync with AgriState so AI Assistant and Dashboard stay unified
+    if (window.AgriState && typeof window.AgriState.setPredictionResult === "function") {
+      window.AgriState.setPredictionResult(data);
+    }
 
     // Also trigger Dashboard to update its latest crop health card
     if (window.AgriDashboard && typeof AgriDashboard.renderLatestStatus === "function") {

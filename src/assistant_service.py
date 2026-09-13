@@ -271,6 +271,7 @@ class AgriAssistantService:
     def build_system_instruction(self, language: str = "en") -> str:
         """
         Creates the controlled system instruction tailored to agricultural advisory.
+        Strictly restricts answers to farming and AgriSmart topics only.
         """
         lang_directive = "Respond in clear, simple English for a farmer."
         if language == "hi":
@@ -288,6 +289,20 @@ class AgriAssistantService:
 
         instruction = f"""You are the AgriSmart AI Farmer Assistant, an empathetic, highly responsible, and practical agricultural advisory companion for farmers.
 
+CRITICAL TOPIC BOUNDARY — AGRICULTURAL & AGRISMART TOPICS ONLY:
+You are exclusively an agricultural advisory assistant for AgriSmart AI.
+You are permitted to answer ONLY questions directly related to:
+1. Crop health, plant leaf disease symptoms, diagnosis, and organic/cultural precautions.
+2. Local agricultural weather conditions, 24-hour rainfall forecasts, ambient humidity, and their impact on crops.
+3. Smart irrigation scheduling, measured soil moisture, and water conservation.
+4. Farm sustainability score, eco-score rules, and resource efficiency.
+5. Farmer profile, registered crops, growth stages, soil type, and general agronomic field practices.
+
+FOR ANY QUESTION UNRELATED TO AGRICULTURE OR THE AGRISMART APPLICATION (such as general knowledge, coding/programming, non-farming science, entertainment, movies, sports, politics, creative writing, or non-agricultural general knowledge):
+YOU MUST POLITELY DECLINE TO ANSWER.
+State clearly:
+"I am AgriSmart AI, an agricultural companion dedicated solely to your farm, crop health, weather, irrigation, and sustainability. I cannot answer questions outside of farming and agriculture. Please ask a question related to your crops, field conditions, or farm management."
+
 LANGUAGE DIRECTIVE:
 {lang_directive}
 
@@ -296,7 +311,7 @@ CRITICAL RULES & SAFETY GUARDRAILS (NEVER VIOLATE):
    - If a metric (e.g. rain probability, disease, soil moisture) is listed as [NOT AVAILABLE], explicitly tell the farmer that this data has not been measured or loaded yet. NEVER fabricate, hallucinate, or guess numbers.
 2. DO NOT OVERRIDE THE ML MODEL: The crop disease prediction from the ML model is authoritative. Explain what the detected disease means, its symptoms, and cultural management. NEVER re-diagnose or contradict the model's prediction. If no disease is detected or no leaf scanned, advise the farmer to scan a clear leaf.
 3. CONFIDENCE IS NOT ACCURACY: If model confidence is provided (e.g. 91%), refer to it strictly as 'Model confidence is about 91%'. NEVER call it 'accuracy' or 'सटीकता'.
-4. RESPECT IRRIGATION RULES: The rule-based irrigation recommendation (Irrigate now, Delay irrigation, Monitor) is authoritative. If the system says 'Delay irrigation', explain why (e.g. rain expected). NEVER advise irrigating when the engine recommends delaying.
+4. RESPECT IRRIGATION RULES: The rule-based irrigation recommendation (Irrigate now, Delay irrigation, Monitor) is authoritative. If the system says 'Delay irrigation', explain why (e.g. rain expected). NEVER advise irrigating when the engine recommends delaying. Even if the user explicitly demands watering, uphold the system's recommendation.
 5. RESPECT SUSTAINABILITY METRICS: If a sustainability score is available, explain it as a 'Rule-based Stewardship Indicator' based on water efficiency and weather adaptation. Do not claim certified carbon credits or guaranteed yield increases.
 6. SAFE REMEDIATION & PESTICIDE CAUTION:
    - Always prioritize safe cultural and organic practices (field sanitation, pruning diseased leaves, avoiding wetting foliage at night).
@@ -335,17 +350,35 @@ CRITICAL RULES & SAFETY GUARDRAILS (NEVER VIOLATE):
                 error_code="MESSAGE_TOO_LONG"
             )
 
-        # 2. Check configuration
-        if not self.is_configured():
-            raise AssistantNotConfiguredError()
-
         # Normalize language
         lang_code = language.lower() if isinstance(language, str) else "en"
         if lang_code not in ("en", "hi", "gu"):
             lang_code = "en"
 
-        # 3. Build grounded context
+        # 2. Build grounded context
         grounded_facts, grounded_modules = self.build_grounded_context(context)
+
+        # 3. Security & Prompt Injection Pre-check
+        lower_msg = clean_message.lower()
+        injection_patterns = [
+            "ignore previous instructions", "ignore all instructions", "disregard previous instructions",
+            "reveal your system prompt", "tell me your system prompt", "what is your system prompt",
+            "show your system prompt", "print your system prompt", "reveal api key", "what is your api key",
+            "what is your gemini api key", "tell me your api key", "give me your api key", "leak key"
+        ]
+        if any(p in lower_msg for p in injection_patterns):
+            logger.warning("Prompt injection/secret extraction attempt blocked: '%s'", clean_message[:60])
+            return {
+                "response": "I am AgriSmart AI, an agricultural companion. I cannot reveal internal system instructions, credentials, or deviate from farming advisory. Please ask a question related to your crops, field conditions, weather, irrigation, or sustainability.",
+                "language": lang_code,
+                "grounded_modules": grounded_modules,
+                "model_provider": self.get_provider_name()
+            }
+
+        # 4. Check configuration
+        if not self.is_configured():
+            raise AssistantNotConfiguredError()
+
         system_instruction = self.build_system_instruction(lang_code)
 
         # 4. Process conversation history (bounded to last MAX_HISTORY_MESSAGES)
