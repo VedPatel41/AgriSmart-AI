@@ -63,7 +63,8 @@ The **AgriSmart Assistant** acts as a practical, empathetic, and responsible agr
 | **Sustainability** | Formula 60/40 (`sustainability_service.py`) | Explains water conservation tips. Never invents certification claims. |
 
 ### 2.2 Architecture & Provider Integration
-- **Provider**: Google Gemini 1.5 Flash (`gemini-1.5-flash`).
+- **Provider**: Google Gemini 1.5 Flash (`gemini-1.5-flash`) as the single, standardized GenAI provider.
+- **Claude Dependency Removed**: Anthropic Claude API is **NOT required** and not used by the application runtime.
 - **Integration**: Pure server-side HTTPS REST requests to `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`. Zero heavy third-party SDK dependencies required.
 - **Zero Client-Side Secret Exposure**: All API keys reside strictly on the server in `.env`. Client-side JavaScript never contains or exposes `GEMINI_API_KEY`.
 - **Honest Error Handling**: If `GEMINI_API_KEY` is not configured, the backend returns HTTP 503 `NOT_CONFIGURED` with a safe, polite user message. It never fabricates fallback responses.
@@ -244,14 +245,16 @@ PORT=5000
 SERVER_HOST=0.0.0.0
 DEBUG_MODE=false
 
-# Google Gemini API Key for Farmer Assistant
+# Google Gemini API Key for Farmer Assistant (REQUIRED)
 GEMINI_API_KEY=your_gemini_api_key_here
 
-# OpenWeatherMap API Key for Live Weather Intelligence
+# OpenWeatherMap API Key for Live Weather Intelligence (REQUIRED)
 OPENWEATHER_API_KEY=your_openweather_api_key_here
+
+# Note: CLAUDE_API_KEY is NOT required (Claude dependency removed)
 ```
 
-> **Zero Fake Data Policy**: If `GEMINI_API_KEY` or `OPENWEATHER_API_KEY` are not provided, the respective module displays an honest, helpful message indicating that the service is unconfigured. The application never serves hardcoded or fabricated runtime data.
+> **Zero Fake Data Policy**: If `GEMINI_API_KEY` or `OPENWEATHER_API_KEY` are not provided, the respective module displays an honest, helpful message indicating that the service is unconfigured. The application never serves hardcoded or fabricated runtime data. Claude API is completely unneeded.
 
 ### 5.4 Running the Application
 ```bash
@@ -292,7 +295,8 @@ python src/test_final_qa.py
 # Full End-to-End Integration Suite (8 comprehensive tests)
 python src/test_e2e_integration.py
 
-# Unit Tests for Assistant Grounding
+# Unit Tests for Assistant Grounding & Gemini Standardization
+python src/test_gemini_standardization.py
 python scripts/test_assistant_grounding.py
 python src/test_assistant.py
 python src/test_assistant_e2e.py

@@ -49,8 +49,6 @@ class TestAssistantService(unittest.TestCase):
     def setUp(self):
         self.service = AgriAssistantService(api_key="test_api_key_123")
         self.unconfigured_service = AgriAssistantService(api_key="")
-        # Ensure env does not interfere
-        self.unconfigured_service.claude_key = ""
 
     def test_configuration_detection(self):
         """Service correctly identifies whether an API key is available."""

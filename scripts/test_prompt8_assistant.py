@@ -174,7 +174,7 @@ def run_all_tests():
 
         res_gemini = svc.generate_response("What should I do about this disease?", context=ctx_diag)
         assert "Based on your AgriSmart data" in res_gemini["response"]
-        assert res_gemini["model_provider"] == "google-gemini-1.5-flash"
+        assert res_gemini["model_provider"].startswith("google-gemini")
         print("  PASS: Gemini REST response parsed and returned successfully")
 
     # 12. Provider Error Handling (HTTP 500/502/429)

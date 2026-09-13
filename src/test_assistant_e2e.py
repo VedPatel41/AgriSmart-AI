@@ -27,7 +27,6 @@ class TestAssistantE2E(unittest.TestCase):
     def setUp(self):
         self.service_with_key = AgriAssistantService(api_key="ai_test_key_sample")
         self.service_no_key = AgriAssistantService(api_key="")
-        self.service_no_key.claude_key = ""
 
     def test_01_empty_message(self):
         with self.assertRaises(AssistantValidationError) as ctx:
