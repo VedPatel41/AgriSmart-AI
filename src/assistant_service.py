@@ -24,9 +24,9 @@ logger = logging.getLogger("agrismart.assistant")
 # Maximum input limits to prevent token abuse and prompt injection
 MAX_USER_MESSAGE_LENGTH = 600
 MAX_HISTORY_MESSAGES = 8
-DEFAULT_GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+DEFAULT_GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
 GEMINI_API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-REQUEST_TIMEOUT_SECONDS = 7
+REQUEST_TIMEOUT_SECONDS = 14
 
 
 class AssistantError(Exception):
@@ -418,7 +418,8 @@ CRITICAL RULES & SAFETY GUARDRAILS (NEVER VIOLATE):
         # 6. Execute server-side REST request
         url = GEMINI_API_ENDPOINT.format(model=self.model)
         headers = {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "x-goog-api-key": self.api_key
         }
         params = {
             "key": self.api_key
@@ -436,7 +437,7 @@ CRITICAL RULES & SAFETY GUARDRAILS (NEVER VIOLATE):
 
             # If configured model endpoint returns 404 or 503, fallback to resilient alternate Gemini model
             if response.status_code in (404, 503):
-                alt_model = "gemini-2.0-flash" if self.model != "gemini-2.0-flash" else "gemini-1.5-flash"
+                alt_model = "gemini-flash-latest" if self.model != "gemini-flash-latest" else "gemini-2.5-flash-lite"
                 logger.info("Model '%s' returned HTTP %d, falling back to '%s'", self.model, response.status_code, alt_model)
                 url_fallback = GEMINI_API_ENDPOINT.format(model=alt_model)
                 response = requests.post(
