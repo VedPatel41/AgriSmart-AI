@@ -199,8 +199,8 @@ def run_full_suite():
     p_wea_val, r_wv = test_step("12d. Weather Missing Location Validation", "get", "/weather", 400)
     p_sust, r_sust = test_step("12e. Sustainability Valid Assessment", "post", "/sustainability", 200, json={"soil_moisture": 45.0, "rain_probability": 10, "recommendation": "Monitor", "disease_risk": "Low"})
     p_sust_val, _ = test_step("12f. Sustainability Missing Field Validation", "post", "/sustainability", 400, json={"rain_probability": 10})
-    # Assistant endpoint returns 200 when GEMINI_API_KEY configured, or 503 (NOT_CONFIGURED) without fake data
-    p_asst, r_asst = test_step("12g. Assistant Endpoint (Query)", "post", "/assistant", [200, 503], json={"message": "Meri crop ko kya hua?", "language": "hi"})
+    # Assistant endpoint returns 200 when GEMINI_API_KEY configured, 503 (NOT_CONFIGURED), or 502 (AI_PROVIDER_ERROR) without fake data
+    p_asst, r_asst = test_step("12g. Assistant Endpoint (Query)", "post", "/assistant", [200, 502, 503], json={"message": "Meri crop ko kya hua?", "language": "hi"})
     p_asst_val, _ = test_step("12h. Assistant Missing Message Validation", "post", "/assistant", 400, json={})
     results.append(p_irr and p_wea_get and p_wea_post and p_wea_val and p_sust and p_sust_val and p_asst and p_asst_val)
 

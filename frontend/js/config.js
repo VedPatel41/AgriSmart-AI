@@ -1,3 +1,4 @@
+
 /**
  * AgriSmart AI - Frontend Configuration & Constants
  * Single source of truth for API, upload rules, validation, and precautions.
@@ -15,7 +16,7 @@ const AgriConfig = {
         const stored = window.localStorage.getItem("agrismart_api_url");
         if (stored && stored.trim()) return stored.trim().replace(/\/+$/, "");
       }
-    } catch (e) {}
+    } catch (e) { }
     // 3. Local development fallbacks
     if (window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
       return "http://localhost:5000";
@@ -183,6 +184,96 @@ const AgriConfig = {
 
   // Actionable Precaution Knowledge Base for Farmers
   precautions: {
+    "Apple__Apple_scab": {
+      name: "Apple — Apple Scab",
+      severity: "High Alert",
+      advice: "Prune infected leaves and fallen foliage immediately. Ensure maximum canopy airflow. Apply preventive copper spray at green tip stage.",
+      organicCare: "Spray neem oil or diluted wettable sulfur in early morning hours."
+    },
+    "Apple__Black_rot": {
+      name: "Apple — Black Rot",
+      severity: "High Alert",
+      advice: "Prune out dead cankered branches during dormant season. Remove and safely burn all mummified fruit clinging to trees or lying on the ground.",
+      organicCare: "Apply sulfur or copper lime spray from silver-tip bud stage."
+    },
+    "Apple__Cedar_apple_rust": {
+      name: "Apple — Cedar Apple Rust",
+      severity: "Moderate Alert",
+      advice: "Bright orange-yellow spots on leaves. Remove neighboring eastern red cedar or juniper trees within 1 km if feasible.",
+      organicCare: "Apply liquid sulfur or bio-fungicide at blossom time."
+    },
+    "Apple___healthy": {
+      name: "Apple — Healthy Tree",
+      severity: "Optimal Condition",
+      advice: "Foliage exhibits vibrant green health with no lesions. Maintain scheduled orchard drip irrigation and regular scouting.",
+      organicCare: "Apply balanced organic compost and seaweed extract foliar spray."
+    },
+    "Blueberry___healthy": {
+      name: "Blueberry — Healthy Plant",
+      severity: "Optimal Condition",
+      advice: "Leaves are robust, dark green, and free from chlorosis. Maintain acidic soil conditions (pH 4.5–5.5) and organic mulch.",
+      organicCare: "Apply pine needle or pine bark mulch to preserve soil acidity."
+    },
+    "Cherry_(including_sour)___Powdery_mildew": {
+      name: "Cherry — Powdery Mildew",
+      severity: "Moderate Alert",
+      advice: "White powdery patches on new leaves and shoots. Prune crowded branches to enhance sunlight penetration and air circulation.",
+      organicCare: "Spray potassium bicarbonate (3g/L) or neem oil (2ml/L) at first sign of mold."
+    },
+    "Cherry_(including_sour)___healthy": {
+      name: "Cherry — Healthy Tree",
+      severity: "Optimal Condition",
+      advice: "Healthy glossy foliage with no fungal blotches. Maintain regular irrigation and annual dormant sanitation.",
+      organicCare: "Apply vermicompost at tree basin before monsoon flush."
+    },
+    "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": {
+      name: "Corn (Maize) — Grey Leaf Spot",
+      severity: "High Alert",
+      advice: "Rectangular grey-to-brown lesions bounded by leaf veins. Practice 2-year crop rotation and deep tillage of crop residues.",
+      organicCare: "Seed treatment with Trichoderma viride and foliar bio-fungicide spray."
+    },
+    "Corn_(maize)___Common_rust_": {
+      name: "Corn (Maize) — Common Rust",
+      severity: "Moderate Alert",
+      advice: "Common rust thrives in high humidity. Remove neighboring wild grass weeds that act as alternate hosts. Avoid overhead sprinkler irrigation.",
+      organicCare: "Select resistant seed hybrids for the next planting cycle."
+    },
+    "Corn_(maize)___Northern_Leaf_Blight": {
+      name: "Corn (Maize) — Northern Leaf Blight",
+      severity: "High Alert",
+      advice: "Long cigar-shaped tan lesions on leaves. Rotate with non-grass crops and bury crop debris post-harvest.",
+      organicCare: "Apply cow urine-neem extract foliar spray at early tillering stage."
+    },
+    "Corn_(maize)___healthy": {
+      name: "Corn (Maize) — Healthy Crop",
+      severity: "Optimal Condition",
+      advice: "Deep green vigorous foliage with zero lesions. Maintain balanced nitrogen application and root-zone moisture.",
+      organicCare: "Apply well-decomposed farmyard manure and Azotobacter bio-fertilizer."
+    },
+    "Grape___Black_rot": {
+      name: "Grape — Black Rot",
+      severity: "High Alert",
+      advice: "Circular reddish-brown leaf spots and hard black mummified berries. Remove and burn all mummified fruit clusters.",
+      organicCare: "Spray copper soap fungicide at early bud break and train canopy on trellises."
+    },
+    "Grape___Esca_(Black_Measles)": {
+      name: "Grape — Esca (Black Measles)",
+      severity: "High Alert",
+      advice: "Tiger-stripe yellow/brown leaf chlorosis and dark spotted fruit. Seal large vine pruning wounds immediately.",
+      organicCare: "Apply Trichoderma-based bio-paste onto pruning cuts and disinfect shears with 70% alcohol."
+    },
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
+      name: "Grape — Leaf Blight (Isariopsis)",
+      severity: "Moderate Alert",
+      advice: "Irregular dark brown angular spots on foliage. Prune vine canopy to promote rapid drying after rains.",
+      organicCare: "Spray Bordeaux mixture 1% or copper oxychloride in early morning."
+    },
+    "Grape___healthy": {
+      name: "Grape — Healthy Vine",
+      severity: "Optimal Condition",
+      advice: "Vibrant green foliage with no fungal leaf spotting or berry rot. Continue trellising and regulated drip irrigation.",
+      organicCare: "Apply balanced organic compost and zinc-boron micronutrient spray."
+    },
     "Tomato_Early_Blight": {
       name: "Tomato — Early Blight",
       severity: "Moderate Alert",
@@ -200,30 +291,6 @@ const AgriConfig = {
       severity: "Optimal Condition",
       advice: "Your crop exhibits healthy green foliage with no detectable pathogens. Maintain regular drip irrigation at the root zone and inspect leaves weekly.",
       organicCare: "Apply balanced organic compost to sustain natural immunity."
-    },
-    "Potato_Early_Blight": {
-      name: "Potato — Early Blight",
-      severity: "Moderate Alert",
-      advice: "Prune affected lower leaves and mulch around plant bases. Practice a 3-year crop rotation avoiding nightshade family crops.",
-      organicCare: "Treat with copper hydroxide spray if lesions cover more than 5% of leaf area."
-    },
-    "Potato_Late_Blight": {
-      name: "Potato — Late Blight",
-      severity: "High Alert",
-      advice: "Harvest tubers during dry weather only. Discard any tubers showing brown or sunken flesh. Store harvested potatoes in a dark, dry, ventilated area.",
-      organicCare: "Remove cull piles and destroy volunteer potato sprouts."
-    },
-    "Corn_Common_Rust": {
-      name: "Corn (Maize) — Common Rust",
-      severity: "Moderate Alert",
-      advice: "Common rust thrives in high humidity. Remove neighboring wild grass weeds that act as alternate hosts. Avoid overhead sprinkler irrigation.",
-      organicCare: "Select resistant seed hybrids for the next planting cycle."
-    },
-    "Apple_Black_Rot": {
-      name: "Apple — Black Rot",
-      severity: "High Alert",
-      advice: "Prune out dead cankered branches during dormant winter season. Remove and burn mummified fruit hanging on trees or lying on ground.",
-      organicCare: "Apply sulfur or copper lime spray from silver-tip bud stage."
     }
   },
 

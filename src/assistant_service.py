@@ -24,7 +24,7 @@ logger = logging.getLogger("agrismart.assistant")
 # Maximum input limits to prevent token abuse and prompt injection
 MAX_USER_MESSAGE_LENGTH = 600
 MAX_HISTORY_MESSAGES = 8
-DEFAULT_GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
+DEFAULT_GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
 GEMINI_API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 REQUEST_TIMEOUT_SECONDS = 7
 
@@ -436,7 +436,7 @@ CRITICAL RULES & SAFETY GUARDRAILS (NEVER VIOLATE):
 
             # If configured model endpoint returns 404 or 503, fallback to resilient alternate Gemini model
             if response.status_code in (404, 503):
-                alt_model = "gemini-3.6-flash" if self.model != "gemini-3.6-flash" else "gemini-3.5-flash-lite"
+                alt_model = "gemini-2.0-flash" if self.model != "gemini-2.0-flash" else "gemini-1.5-flash"
                 logger.info("Model '%s' returned HTTP %d, falling back to '%s'", self.model, response.status_code, alt_model)
                 url_fallback = GEMINI_API_ENDPOINT.format(model=alt_model)
                 response = requests.post(

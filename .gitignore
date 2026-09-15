@@ -41,3 +41,7 @@ tempCodeRunnerFile.py
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+# Large raw parquet datasets & local model backups
+data/plantvillage_subset/
+model/*_backup.pt

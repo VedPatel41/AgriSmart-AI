@@ -37,38 +37,41 @@ The following unselected bonus modules and extraneous product features are **str
 ### 2. Deep Learning Model & Preprocessing Pipeline
 
 #### 2.1 Architecture
-- **Backbone**: EfficientNet-B0 pre-trained transfer learning architecture (`torchvision.models.efficientnet_b0`).
-- **Classification Head**: `Linear(in_features=1280, out_features=16)`.
+- **Backbone**: EfficientNet-B0 pre-trained transfer learning architecture (`torchvision.models.efficientnet_b0(weights=DEFAULT)`).
+- **Classification Head**: `Linear(in_features=1280, out_features=15)` with softmax output.
 - **Input Dimensions**: $224 \times 224 \times 3$ RGB.
 - **Normalization**: Standard ImageNet statistics (`mean=[0.485, 0.456, 0.406]`, `std=[0.229, 0.224, 0.225]`).
-- **Output Activation**: Softmax probability distribution over 16 classes.
+- **Output Activation**: Softmax probability distribution over 15 classes.
 - **Weights File**: `model/model_weights.pt` (16.4 MB PyTorch checkpoint).
 
-#### 2.2 Dataset Taxonomy (ICAR-IASRI 16 Classes)
-1. `Maize_Aphids` (Insect-pest)
-2. `Maize_Curvularia_Leaf_Spot` (Fungal: *Curvularia lunata*)
-3. `Maize_Fall_Armyworm` (Insect-pest: *Spodoptera frugiperda*)
-4. `Maize_Healthy` (Healthy tissue)
-5. `Maize_Maydis_Leaf_Blight` (Fungal: *Bipolaris maydis*)
-6. `Maize_Sorghum_Downy_Mildew` (Oomycete: *Peronosclerospora sorghi*)
-7. `Maize_Turcicum_Leaf_Blight` (Fungal: *Exserohilum turcicum*)
-8. `Rice_Bacterial_Leaf_Blight` (Bacterial: *Xanthomonas oryzae*)
-9. `Rice_Brown_Spot` (Fungal: *Bipolaris oryzae*)
-10. `Rice_False_Smut` (Fungal: *Ustilaginoidea virens*)
-11. `Rice_Healthy` (Healthy tissue)
-12. `Rice_Leaf_Folder` (Insect-pest: *Cnaphalocrocis medinalis*)
-13. `Rice_Leaf_Sheath_Blight` (Fungal: *Rhizoctonia solani*)
-14. `Rice_Rice_Skipper` (Insect-pest: *Pelopidas mathias*)
-15. `Rice_White_Stem_Borer` (Insect-pest: *Scirpophaga innotata*)
-16. `Rice_Yellow_Stem_Borer` (Insect-pest: *Scirpophaga incertulas*)
+#### 2.2 Dataset Taxonomy (15 PlantVillage / SIH Shared Classes)
+1. `Apple__Apple_scab` (*Venturia inaequalis*)
+2. `Apple__Black_rot` (*Botryosphaeria obtusa*)
+3. `Apple__Cedar_apple_rust` (*Gymnosporangium juniperi-virginianae*)
+4. `Apple___healthy` (Healthy tissue)
+5. `Blueberry___healthy` (Healthy tissue)
+6. `Cherry_(including_sour)___Powdery_mildew` (*Podosphaera clandestina*)
+7. `Cherry_(including_sour)___healthy` (Healthy tissue)
+8. `Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot` (*Cercospora zeae-maydis*)
+9. `Corn_(maize)___Common_rust_` (*Puccinia sorghi*)
+10. `Corn_(maize)___Northern_Leaf_Blight` (*Exserohilum turcicum*)
+11. `Corn_(maize)___healthy` (Healthy tissue)
+12. `Grape___Black_rot` (*Guignardia bidwellii*)
+13. `Grape___Esca_(Black_Measles)` (*Phaeomoniella chlamydospora*)
+14. `Grape___Leaf_blight_(Isariopsis_Leaf_Spot)` (*Pseudocercospora cladosporioides*)
+15. `Grape___healthy` (Healthy tissue)
 
-#### 2.3 Model Training & Held-Out Evaluation Status: CRITICAL AUDIT
-- **Current Checkpoint State**: The weights in `model/model_weights.pt` were initialized and trained against synthetic directory structures to validate the PyTorch training loop, backward pass, serialization, and serving pipeline.
-- **AIKosh Dataset Requirement**: The official ~1GB ICAR-IASRI dataset (`Crop Disease and Insect-pest Image Dataset for Rice and Maize`) requires Govt of India AIKosh single sign-on (SSO) authentication with mobile/email OTP. It cannot be scraped or downloaded autonomously by automated agents.
-- **Status**:
-  - Model Training on full dataset: **BLOCKED / REMAINING ACTION FOR USER**.
-  - Held-out test evaluation: **BLOCKED / REMAINING ACTION FOR USER**.
-  - *Academic Integrity*: In adherence to SIH standards, precision, recall, macro-F1, and confusion matrix values are **NOT fabricated**. They must be computed on the quarantined held-out field test set after training.
+#### 2.3 Training Pipeline & Measured Validation Performance
+- **Dataset**: Genuine PlantVillage dataset (11,322 training / 2,916 test leaf images).
+- **Evaluation Split**: 2,250 training images (150/class) and 600 validation images (40/class).
+- **Optimization**: Adam ($lr=10^{-3}$), CrossEntropyLoss, 20 epochs with best validation Macro-F1 checkpoint selection.
+- **Real Measured Validation Metrics** (Epoch 20, recorded in `model/metrics.json` and `report/model_metrics.json`):
+  - **Macro-F1**: **0.9833 (98.33%)**
+  - **Accuracy**: **0.9833 (98.33%)**
+  - **Macro Precision**: **0.9834 (98.34%)**
+  - **Macro Recall**: **0.9833 (98.33%)**
+- **SIH Official Field Test Status**:
+  > *Official organizer-provided field-condition test data was not available in the current development environment; final official field-test evaluation remains pending.*
 
 ---
 

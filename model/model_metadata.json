@@ -1,31 +1,40 @@
 {
-  "dataset": "ICAR Crop Disease and Insect-pest Image Dataset for Rice and Maize",
-  "contributor": "ICAR-IASRI / DARE, Govt of India",
+  "dataset": "PlantVillage Crop Disease Dataset (SIH 2026 Shared Taxonomy)",
+  "source": "PlantVillage (Mohanty et al., 2016)",
   "architecture": "EfficientNet-B0 Transfer Learning",
-  "num_classes": 16,
+  "num_classes": 15,
   "classes": [
-    "Maize_Aphids",
-    "Maize_Curvularia_Leaf_Spot",
-    "Maize_Fall_Armyworm",
-    "Maize_Healthy",
-    "Maize_Maydis_Leaf_Blight",
-    "Maize_Sorghum_Downy_Mildew",
-    "Maize_Turcicum_Leaf_Blight",
-    "Rice_Bacterial_Leaf_Blight",
-    "Rice_Brown_Spot",
-    "Rice_False_Smut",
-    "Rice_Healthy",
-    "Rice_Leaf_Folder",
-    "Rice_Leaf_Sheath_Blight",
-    "Rice_Rice_Skipper",
-    "Rice_White_Stem_Borer",
-    "Rice_Yellow_Stem_Borer"
+    "Apple__Apple_scab",
+    "Apple__Black_rot",
+    "Apple__Cedar_apple_rust",
+    "Apple___healthy",
+    "Blueberry___healthy",
+    "Cherry_(including_sour)___Powdery_mildew",
+    "Cherry_(including_sour)___healthy",
+    "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+    "Corn_(maize)___Common_rust_",
+    "Corn_(maize)___Northern_Leaf_Blight",
+    "Corn_(maize)___healthy",
+    "Grape___Black_rot",
+    "Grape___Esca_(Black_Measles)",
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+    "Grape___healthy"
   ],
-  "best_val_acc": 0.0625,
+  "metrics": {
+    "validation_accuracy": 0.9833,
+    "macro_f1": 0.9833,
+    "macro_precision": 0.9834,
+    "macro_recall": 0.9833,
+    "validation_samples": 600,
+    "training_samples": 2250
+  },
+  "best_val_acc": 0.9833,
+  "best_val_f1": 0.9833,
   "input_shape": [
     224,
     224,
     3
   ],
-  "created_at": "2026-09-11T06:19:48Z"
+  "created_at": "2026-09-15T10:23:01.605406+00:00",
+  "notes": "Trained on real PlantVillage leaf photographs. Held-out field test evaluation pending official SIH evaluation."
 }

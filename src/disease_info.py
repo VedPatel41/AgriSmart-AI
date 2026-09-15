@@ -221,6 +221,174 @@ DISEASE_ADVISORY_DB = {
         "chemical_remedy": "No chemical needed.",
         "prevention": "Maintain scheduled irrigation and staking.",
         "hindi_summary": "Tomato crop is healthy. Maintain scheduled irrigation and staking."
+    },
+    # -------------------------------------------------------------------------
+    # PLANTVILLAGE & SIH 2026 SHARED BENCHMARK TAXONOMY
+    # -------------------------------------------------------------------------
+    "Apple__Apple_scab": {
+        "crop": "Apple",
+        "disease_name": "Apple Scab",
+        "pathogen_type": "Fungal (Venturia inaequalis)",
+        "severity": "High",
+        "symptoms": "Olive-green to velvety dark brown lesions on leaves and fruit, causing distortion and early leaf drop.",
+        "organic_remedy": "Apply sulfur or neem oil spray in early morning; prune fallen diseased leaves.",
+        "chemical_remedy": "Spray Captan 50% WP @ 2.5 g/L or Difenoconazole 25% EC @ 0.5 ml/L at green tip stage.",
+        "prevention": "Rake and compost or burn fallen leaves in autumn; prune canopy for thorough air circulation.",
+        "hindi_summary": "Apple Scab: Olive-green to dark brown lesions on leaves and fruit. Spray Captan or Difenoconazole and prune fallen leaves."
+    },
+    "Apple__Black_rot": {
+        "crop": "Apple",
+        "disease_name": "Apple Black Rot",
+        "pathogen_type": "Fungal (Botryosphaeria obtusa)",
+        "severity": "High",
+        "symptoms": "Circular 'frog-eye' leaf spots with purple margins; mummified rotting fruit clinging to twigs.",
+        "organic_remedy": "Prune out dead wood and cankered limbs; spray copper soap fungicide at bud break.",
+        "chemical_remedy": "Spray Mancozeb 75% WP @ 2 g/L or Captan 50% WP @ 2 g/L from pink bud through petal fall.",
+        "prevention": "Remove and destroy all mummified fruit on trees or ground; practice annual dormant sanitation pruning.",
+        "hindi_summary": "Apple Black Rot: Frog-eye leaf spots and mummified rotting fruit. Remove mummified fruit and spray Mancozeb or Captan."
+    },
+    "Apple__Cedar_apple_rust": {
+        "crop": "Apple",
+        "disease_name": "Cedar Apple Rust",
+        "pathogen_type": "Fungal (Gymnosporangium juniperi-virginianae)",
+        "severity": "Moderate",
+        "symptoms": "Bright orange-yellow circular spots on upper leaf surfaces; tube-like aecia forming on leaf undersides.",
+        "organic_remedy": "Spray liquid sulfur or Serenade bio-fungicide at blossom time.",
+        "chemical_remedy": "Spray Myclobutanil 10% WP @ 1 g/L or Mancozeb 75% WP @ 2 g/L at pink bud stage.",
+        "prevention": "Remove nearby eastern red cedar and juniper shrubs within 1–2 km radius if practical.",
+        "hindi_summary": "Cedar Apple Rust: Bright orange-yellow spots on upper leaf surfaces. Spray Myclobutanil or Mancozeb at pink bud stage."
+    },
+    "Apple___healthy": {
+        "crop": "Apple",
+        "disease_name": "Healthy Apple Foliage",
+        "pathogen_type": "None (Healthy Tissue)",
+        "severity": "None",
+        "symptoms": "Vibrant, uniform green leaves with no fungal spots, rust pustules, or insect chewing.",
+        "organic_remedy": "Apply balanced organic compost and seaweed extract foliar spray.",
+        "chemical_remedy": "No chemical treatment required.",
+        "prevention": "Maintain regular orchard pruning, balanced soil pH (6.0–6.8), and clean root zone drip irrigation.",
+        "hindi_summary": "Apple crop is healthy. Maintain regular pruning and balanced root-zone irrigation."
+    },
+    "Blueberry___healthy": {
+        "crop": "Blueberry",
+        "disease_name": "Healthy Blueberry Foliage",
+        "pathogen_type": "None (Healthy Tissue)",
+        "severity": "None",
+        "symptoms": "Dark green, waxy leaves with no marginal scorch, rust, or chlorotic mottling.",
+        "organic_remedy": "Apply pine bark or pine needle mulch to maintain acidic root-zone environment.",
+        "chemical_remedy": "No chemical treatment required.",
+        "prevention": "Maintain acidic soil pH (4.5–5.5) and ensure consistent, well-drained drip irrigation.",
+        "hindi_summary": "Blueberry crop is healthy. Maintain acidic soil conditions (pH 4.5-5.5) and pine mulch."
+    },
+    "Cherry_(including_sour)___Powdery_mildew": {
+        "crop": "Cherry",
+        "disease_name": "Cherry Powdery Mildew",
+        "pathogen_type": "Fungal (Podosphaera clandestina)",
+        "severity": "Moderate to High",
+        "symptoms": "White powdery fungal patches on new foliage and terminal shoots, leaf curling and crinkling.",
+        "organic_remedy": "Spray potassium bicarbonate @ 3 g/L or neem oil 10,000 ppm @ 2 ml/L at first sign of white mold.",
+        "chemical_remedy": "Spray Myclobutanil 10% WP @ 1 g/L or Wettable Sulfur 80% WP @ 3 g/L.",
+        "prevention": "Prune interior canopy branches to allow sunlight penetration; avoid late-evening overhead sprinkler irrigation.",
+        "hindi_summary": "Cherry Powdery Mildew: White powdery patches on new leaves and curling shoots. Spray Wettable Sulfur or Myclobutanil."
+    },
+    "Cherry_(including_sour)___healthy": {
+        "crop": "Cherry",
+        "disease_name": "Healthy Cherry Foliage",
+        "pathogen_type": "None (Healthy Tissue)",
+        "severity": "None",
+        "symptoms": "Glossy, uniform green leaves with clean margins and no fungal discoloration or shothole lesions.",
+        "organic_remedy": "Apply vermicompost at tree basin before monsoon flush.",
+        "chemical_remedy": "No chemical treatment required.",
+        "prevention": "Ensure good orchard drainage, annual dormant pruning, and regular scouting.",
+        "hindi_summary": "Cherry crop is healthy. Maintain regular orchard pruning and balanced irrigation."
+    },
+    "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": {
+        "crop": "Corn (Maize)",
+        "disease_name": "Grey Leaf Spot",
+        "pathogen_type": "Fungal (Cercospora zeae-maydis)",
+        "severity": "High",
+        "symptoms": "Rectangular, vein-delimited tan-to-grey necrotic lesions running parallel to leaf veins.",
+        "organic_remedy": "Seed treatment with Trichoderma viride @ 5 g/kg; foliar spray of Pseudomonas fluorescens.",
+        "chemical_remedy": "Spray Azoxystrobin 18.2% + Difenoconazole 11.4% SC @ 1 ml/L or Pyraclostrobin @ 1 ml/L.",
+        "prevention": "Practice 2-year crop rotation with non-host crops (soybean/pulses); till or chop infected crop residue.",
+        "hindi_summary": "Grey Leaf Spot in Maize: Rectangular grey-brown lesions bounded by leaf veins. Spray Azoxystrobin + Difenoconazole and practice crop rotation."
+    },
+    "Corn_(maize)___Common_rust_": {
+        "crop": "Corn (Maize)",
+        "disease_name": "Common Rust",
+        "pathogen_type": "Fungal (Puccinia sorghi)",
+        "severity": "Moderate to High",
+        "symptoms": "Oval to elongated cinnamon-brown powdery pustules on both upper and lower leaf surfaces.",
+        "organic_remedy": "Spray Neem oil 10,000 ppm @ 3 ml/L; remove alternate weed hosts (Oxalis species).",
+        "chemical_remedy": "Spray Mancozeb 75% WP @ 2.5 g/L or Azoxystrobin 23% SC @ 1 ml/L when pustules first appear.",
+        "prevention": "Plant rust-resistant hybrid varieties; avoid late planting dates that coincide with high humidity.",
+        "hindi_summary": "Common Rust in Maize: Cinnamon-brown powdery pustules on leaf surfaces. Spray Mancozeb or Azoxystrobin and plant resistant varieties."
+    },
+    "Corn_(maize)___Northern_Leaf_Blight": {
+        "crop": "Corn (Maize)",
+        "disease_name": "Northern Leaf Blight",
+        "pathogen_type": "Fungal (Exserohilum turcicum)",
+        "severity": "High",
+        "symptoms": "Long, elliptical cigar-shaped grey-green to tan lesions (2.5–15 cm) starting on lower leaves.",
+        "organic_remedy": "Foliar spray of cow urine-neem extract (1:10 dilution) or Trichoderma harzianum @ 5 g/L.",
+        "chemical_remedy": "Spray Mancozeb 75% WP @ 2.5 g/L or Azoxystrobin 18.2% + Difenoconazole 11.4% SC @ 1 ml/L.",
+        "prevention": "Rotate crops; plow under infected crop residue to accelerate decomposition of fungal overwintering structures.",
+        "hindi_summary": "Northern Leaf Blight in Maize: Long cigar-shaped tan lesions on lower leaves. Spray Mancozeb or Azoxystrobin + Difenoconazole."
+    },
+    "Corn_(maize)___healthy": {
+        "crop": "Corn (Maize)",
+        "disease_name": "Healthy Corn (Maize) Foliage",
+        "pathogen_type": "None (Healthy Tissue)",
+        "severity": "None",
+        "symptoms": "Robust, deep green arching leaves without rust pustules, blights, or chewing holes.",
+        "organic_remedy": "Apply well-decomposed farmyard manure and balanced bio-fertilizers (Azotobacter).",
+        "chemical_remedy": "No chemical treatment required.",
+        "prevention": "Maintain balanced nitrogen application, proper plant spacing (60x20 cm), and timely weeding.",
+        "hindi_summary": "Corn (Maize) crop is healthy. Maintain proper plant spacing and scheduled irrigation."
+    },
+    "Grape___Black_rot": {
+        "crop": "Grape",
+        "disease_name": "Grape Black Rot",
+        "pathogen_type": "Fungal (Guignardia bidwellii)",
+        "severity": "Critical",
+        "symptoms": "Small brown circular leaf spots with dark margins; fruit rots, blackens, and shrivels into hard mummies.",
+        "organic_remedy": "Apply copper hydroxide @ 2 g/L; hand-remove and safely burn all shriveled mummified berries.",
+        "chemical_remedy": "Spray Mancozeb 75% WP @ 2.5 g/L or Myclobutanil 10% WP @ 1 g/L starting at 2–3 inch shoot growth.",
+        "prevention": "Ensure proper canopy management and trellising for maximum airflow; destroy mummies during winter pruning.",
+        "hindi_summary": "Grape Black Rot: Brown circular leaf spots and berries shriveling into hard black mummies. Spray Mancozeb or Myclobutanil and remove mummies."
+    },
+    "Grape___Esca_(Black_Measles)": {
+        "crop": "Grape",
+        "disease_name": "Esca (Black Measles)",
+        "pathogen_type": "Fungal Complex (Phaeoacremonium / Phaeomoniella)",
+        "severity": "High",
+        "symptoms": "'Tiger-stripe' leaf chlorosis and necrosis; dark spotting ('measles') on berries; internal wood decay.",
+        "organic_remedy": "Paint pruning wounds immediately with Trichoderma-based bio-paste or vegetable oil-based sealant.",
+        "chemical_remedy": "Apply Thiophanate-methyl 70% WP wound sealant paste onto large vine pruning cuts.",
+        "prevention": "Disinfect pruning shears between individual vines with 70% alcohol; avoid large pruning wounds in wet weather.",
+        "hindi_summary": "Grape Esca (Black Measles): Tiger-stripe pattern on leaves and dark spotted berries. Seal pruning cuts immediately and disinfect shears."
+    },
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
+        "crop": "Grape",
+        "disease_name": "Grape Leaf Blight (Isariopsis)",
+        "pathogen_type": "Fungal (Pseudocercospora vitis)",
+        "severity": "Moderate to High",
+        "symptoms": "Irregular dark brown to black angular leaf spots coalescing into large blighted areas, premature leaf fall.",
+        "organic_remedy": "Foliar spray of Bordeaux mixture 1% (10:10:100) or copper oxychloride @ 2.5 g/L.",
+        "chemical_remedy": "Spray Mancozeb 75% WP @ 2.5 g/L or Carbendazim 50% WP @ 1 g/L at 12–15 day intervals.",
+        "prevention": "Keep vine canopy open through regular shoot thinning; avoid high weeds under vine trellises.",
+        "hindi_summary": "Grape Leaf Blight: Dark brown angular leaf spots that spread across foliage. Spray Bordeaux mixture 1% or Mancozeb."
+    },
+    "Grape___healthy": {
+        "crop": "Grape",
+        "disease_name": "Healthy Grape Foliage",
+        "pathogen_type": "None (Healthy Tissue)",
+        "severity": "None",
+        "symptoms": "Expansive, vibrant green foliage free from mildew, necrotic blotches, or fruit rot.",
+        "organic_remedy": "Apply balanced micronutrient foliar spray (Zinc + Boron) and vermicompost.",
+        "chemical_remedy": "No chemical treatment required.",
+        "prevention": "Maintain vine training on trellises, regular canopy thinning, and controlled drip irrigation.",
+        "hindi_summary": "Grape crop is healthy. Maintain proper trellis management and balanced drip irrigation."
     }
 }
 

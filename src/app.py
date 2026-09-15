@@ -209,7 +209,69 @@ def static_proxy(path):
     return make_error_response(f"Resource '{path}' not found", "NOT_FOUND", 404)
 
 
+@app.route("/docs", methods=["GET"])
+def docs():
+    """
+    Honest API documentation catalog for AgriSmart AI services.
+    """
+    return jsonify({
+        "title": "AgriSmart AI API Documentation",
+        "version": "1.0.0",
+        "description": "Smart Agriculture & Crop Health Decision Support API",
+        "endpoints": [
+            {
+                "path": "/health",
+                "alias": "/api/v1/health",
+                "method": "GET",
+                "description": "Backend and ML model readiness health check",
+                "response": {"status": "ok", "model_loaded": True, "num_classes": 16}
+            },
+            {
+                "path": "/predict",
+                "alias": "/api/v1/predict/disease",
+                "method": "POST",
+                "content_type": "multipart/form-data",
+                "parameters": {"image": "File (JPEG/PNG/WEBP, max 10MB)"},
+                "description": "PyTorch leaf disease classification across 16 ICAR classes",
+                "response": {"class_label": "string", "confidence": "float", "advisory": "object"}
+            },
+            {
+                "path": "/irrigation",
+                "method": "POST",
+                "content_type": "application/json",
+                "parameters": {"soil_moisture": "float (0-100)", "rain_probability": "float (0-100)"},
+                "description": "Deterministic rule-based irrigation recommendation",
+                "response": {"recommendation": "string", "reason": "string"}
+            },
+            {
+                "path": "/weather",
+                "method": "GET, POST",
+                "parameters": {"city": "string", "lat": "float", "lon": "float"},
+                "description": "Live weather conditions and foliar disease outbreak risk",
+                "response": {"temperature": "float", "humidity": "float", "rain_probability": "float"}
+            },
+            {
+                "path": "/sustainability",
+                "method": "POST",
+                "content_type": "application/json",
+                "parameters": {"soil_moisture": "float", "rain_probability": "float"},
+                "description": "60/40 Water stewardship and resource efficiency scoring",
+                "response": {"score": "int (0-100)", "rating": "string"}
+            },
+            {
+                "path": "/assistant",
+                "method": "POST",
+                "content_type": "application/json",
+                "parameters": {"message": "string", "context": "object"},
+                "description": "Grounded GenAI agricultural companion (Google Gemini 1.5 Flash)",
+                "response": {"response": "string"}
+            }
+        ]
+    }), 200
+
+
 @app.route("/health", methods=["GET"])
+@app.route("/api/v1/health", methods=["GET"])
 def health():
     """
     System health and readiness check endpoint.
@@ -239,6 +301,7 @@ def health():
 
 
 @app.route("/predict", methods=["POST"])
+@app.route("/api/v1/predict/disease", methods=["POST"])
 def predict_route():
     """
     Core Crop Disease Prediction Endpoint.
@@ -431,6 +494,8 @@ def irrigation():
     city = data.get("city")
     lat = data.get("lat")
     lon = data.get("lon")
+    crop_type = data.get("crop_type") or data.get("crop")
+    growth_stage = data.get("growth_stage") or data.get("stage")
 
     try:
         result = get_irrigation_decision(
@@ -439,6 +504,8 @@ def irrigation():
             lat=lat,
             lon=lon,
             rain_probability_input=rain_probability_val,
+            crop_type=crop_type,
+            growth_stage=growth_stage,
             weather_service_instance=weather_service
         )
         return jsonify(result), 200

@@ -141,6 +141,26 @@ class TestSmartIrrigationEngine(unittest.TestCase):
         self.assertEqual(res["soil_moisture"], 22.5)
         self.assertEqual(res["rain_probability_24h"], 15)
 
+    def test_crop_and_growth_stage_sensitivity(self):
+        """Verify that crop type and growth stage adjust thresholds appropriately."""
+        # 1. Standard: soil 32%, rain 20% -> Monitor (32 >= 30)
+        baseline = calculate_irrigation_recommendation(32.0, 20)
+        self.assertEqual(baseline["recommendation"], "Monitor")
+
+        # 2. Rice at flowering: threshold adjusts to 30 + 10 + 5 = 45%
+        # Soil 32% < 45% -> Irrigate now!
+        rice_flowering = calculate_irrigation_recommendation(32.0, 20, crop_type="Rice", growth_stage="Flowering")
+        self.assertEqual(rice_flowering["recommendation"], "Irrigate now")
+        self.assertIn("Rice", rice_flowering["reason"])
+        self.assertIn("Flowering", rice_flowering["reason"])
+        self.assertEqual(rice_flowering["effective_threshold"], 45.0)
+
+        # 3. Cotton at maturity: threshold adjusts to 30 - 5 - 5 = 20%
+        # Soil 25% > 20% -> Monitor (doesn't trigger premature watering at harvest)
+        cotton_mat = calculate_irrigation_recommendation(25.0, 20, crop_type="Cotton", growth_stage="Maturity")
+        self.assertEqual(cotton_mat["recommendation"], "Monitor")
+        self.assertEqual(cotton_mat["effective_threshold"], 20.0)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

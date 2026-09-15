@@ -45,8 +45,40 @@ class IrrigationWeatherUnavailableError(IrrigationError):
 
 # Legitimate rule threshold constants (Not demo/fake values)
 RAIN_DELAY_THRESHOLD = 60      # Next-24h rain probability strictly > 60%
-SOIL_DRY_THRESHOLD = 30        # Soil moisture strictly < 30%
+SOIL_DRY_THRESHOLD = 30.0      # Base soil moisture strictly < 30%
 RAIN_LOW_THRESHOLD = 30        # Next-24h rain probability strictly < 30%
+
+# Crop and growth-stage moisture sensitivity adjustments
+CROP_SENSITIVITY = {
+    "rice": 10.0,
+    "paddy": 10.0,
+    "maize": 5.0,
+    "corn": 5.0,
+    "tomato": 5.0,
+    "sugarcane": 5.0,
+    "vegetables": 5.0,
+    "cotton": -5.0,
+    "grape": -5.0,
+    "millet": -5.0,
+    "sorghum": -5.0,
+    "wheat": 0.0,
+    "apple": 0.0,
+    "soybean": 0.0
+}
+
+STAGE_SENSITIVITY = {
+    "germination": 5.0,
+    "seedling": 5.0,
+    "vegetative": 0.0,
+    "flowering": 5.0,
+    "tasseling": 5.0,
+    "silking": 5.0,
+    "fruiting": 5.0,
+    "grain filling": 5.0,
+    "pod formation": 5.0,
+    "maturity": -5.0,
+    "harvest": -10.0
+}
 
 
 def validate_soil_moisture(value: Any) -> float:
@@ -99,55 +131,122 @@ def validate_rain_probability(value: Any) -> int:
 
 def calculate_irrigation_recommendation(
     soil_moisture: float,
-    rain_probability_24h: int
+    rain_probability_24h: int,
+    crop_type: Optional[str] = None,
+    growth_stage: Optional[str] = None
 ) -> Dict[str, Any]:
     """
-    Pure rule engine applying the project's exact irrigation decision rules:
+    Pure rule engine applying the project's exact irrigation decision rules
+    with crop-type and growth-stage sensitivity adjustments:
 
     RULE 1:
     If next-24h rain probability > 60%
     -> Recommendation: "Delay irrigation"
 
     RULE 2:
-    If soil moisture < 30% AND next-24h rain probability < 30%
+    If soil moisture < effective_threshold AND next-24h rain probability < 30%
     -> Recommendation: "Irrigate now"
 
     RULE 3:
     Otherwise
     -> Recommendation: "Monitor"
     """
+    # Calculate dynamic threshold based on crop and growth stage
+    crop_adj = 0.0
+    stage_adj = 0.0
+    context_notes = []
+
+    if crop_type:
+        c_clean = str(crop_type).lower().strip()
+        for k, v in CROP_SENSITIVITY.items():
+            if k in c_clean:
+                crop_adj = v
+                context_notes.append(f"crop sensitivity: {crop_type} ({'+' if v>=0 else ''}{v}%)")
+                break
+
+    if growth_stage:
+        s_clean = str(growth_stage).lower().strip()
+        for k, v in STAGE_SENSITIVITY.items():
+            if k in s_clean:
+                stage_adj = v
+                context_notes.append(f"stage sensitivity: {growth_stage} ({'+' if v>=0 else ''}{v}%)")
+                break
+
+    effective_threshold = round(max(20.0, min(45.0, SOIL_DRY_THRESHOLD + crop_adj + stage_adj)), 1)
+    has_custom_context = bool(crop_type or growth_stage)
+
     # Rule 1: High rain probability upcoming in next 24h
     if rain_probability_24h > RAIN_DELAY_THRESHOLD:
+        reason = (
+            f"Next-24h rain probability is {rain_probability_24h}%, which is above the {RAIN_DELAY_THRESHOLD}% threshold. "
+            f"Delaying irrigation prevents waterlogging, nutrient leaching, and unnecessary water expenditure."
+        )
+        if has_custom_context:
+            reason += f" (Crop context: {', '.join(context_notes) if context_notes else 'standard crop cycle'})"
+
         return {
             "recommendation": "Delay irrigation",
             "decision": "delay_irrigation",
             "soil_moisture": soil_moisture,
             "rain_probability_24h": rain_probability_24h,
+            "effective_threshold": effective_threshold,
+            "crop_type": crop_type,
+            "growth_stage": growth_stage,
             "rule": f"Next-24h rain probability ({rain_probability_24h}%) is above {RAIN_DELAY_THRESHOLD}% threshold.",
-            "reason": f"Next-24h rain probability is {rain_probability_24h}%, which is above the {RAIN_DELAY_THRESHOLD}% threshold. Delaying irrigation prevents waterlogging, nutrient leaching, and unnecessary water expenditure.",
+            "reason": reason,
             "action": "Delay watering to conserve water"
         }
 
     # Rule 2: Soil is dry and low probability of rain
-    if soil_moisture < SOIL_DRY_THRESHOLD and rain_probability_24h < RAIN_LOW_THRESHOLD:
+    if soil_moisture < effective_threshold and rain_probability_24h < RAIN_LOW_THRESHOLD:
+        if has_custom_context and effective_threshold != SOIL_DRY_THRESHOLD:
+            reason = (
+                f"Soil moisture is {soil_moisture}%, below the adjusted threshold of {effective_threshold}% "
+                f"({', '.join(context_notes)}), and next-24h rain probability is {rain_probability_24h}%, below {RAIN_LOW_THRESHOLD}%. "
+                f"Immediate root zone irrigation is recommended to prevent water stress."
+            )
+        else:
+            reason = (
+                f"Soil moisture is {soil_moisture}%, which is below the {int(SOIL_DRY_THRESHOLD)}% threshold, "
+                f"and next-24h rain probability is {rain_probability_24h}%, which is below {RAIN_LOW_THRESHOLD}%. "
+                f"Immediate root zone irrigation is recommended."
+            )
+
         return {
             "recommendation": "Irrigate now",
             "decision": "irrigate_now",
             "soil_moisture": soil_moisture,
             "rain_probability_24h": rain_probability_24h,
-            "rule": f"Soil moisture ({soil_moisture}%) is below {SOIL_DRY_THRESHOLD}% and rain probability ({rain_probability_24h}%) is below {RAIN_LOW_THRESHOLD}%.",
-            "reason": f"Soil moisture is {soil_moisture}%, which is below the {SOIL_DRY_THRESHOLD}% threshold, and next-24h rain probability is {rain_probability_24h}%, which is below {RAIN_LOW_THRESHOLD}%. Immediate root zone irrigation is recommended.",
+            "effective_threshold": effective_threshold,
+            "crop_type": crop_type,
+            "growth_stage": growth_stage,
+            "rule": f"Soil moisture ({soil_moisture}%) is below {effective_threshold}% and rain probability ({rain_probability_24h}%) is below {RAIN_LOW_THRESHOLD}%.",
+            "reason": reason,
             "action": "Irrigation recommended"
         }
 
     # Rule 3: Otherwise -> Monitor
+    if has_custom_context and effective_threshold != SOIL_DRY_THRESHOLD:
+        reason = (
+            f"Soil moisture is {soil_moisture}% (threshold: {effective_threshold}% for {', '.join(context_notes)}) "
+            f"and next-24h rain probability is {rain_probability_24h}%. Conditions do not trigger immediate irrigation or delay; continue monitoring."
+        )
+    else:
+        reason = (
+            f"Soil moisture is {soil_moisture}% and next-24h rain probability is {rain_probability_24h}%. "
+            f"Current moisture conditions do not require immediate water application or postponement; continue routine monitoring."
+        )
+
     return {
         "recommendation": "Monitor",
         "decision": "monitor",
         "soil_moisture": soil_moisture,
         "rain_probability_24h": rain_probability_24h,
+        "effective_threshold": effective_threshold,
+        "crop_type": crop_type,
+        "growth_stage": growth_stage,
         "rule": f"Soil moisture ({soil_moisture}%) and next-24h rain probability ({rain_probability_24h}%) do not trigger immediate irrigation or delay thresholds.",
-        "reason": f"Soil moisture is {soil_moisture}% and next-24h rain probability is {rain_probability_24h}%. Current moisture conditions do not require immediate water application or postponement; continue routine monitoring.",
+        "reason": reason,
         "action": "Maintain standard soil monitoring"
     }
 
@@ -158,6 +257,8 @@ def get_irrigation_decision(
     lat: Optional[float] = None,
     lon: Optional[float] = None,
     rain_probability_input: Optional[Any] = None,
+    crop_type: Optional[str] = None,
+    growth_stage: Optional[str] = None,
     weather_service_instance: Optional[Any] = None
 ) -> Dict[str, Any]:
     """
@@ -199,6 +300,11 @@ def get_irrigation_decision(
         location_name = weather_data.get("location", {}).get("name", query_city)
 
     # 3. Calculate recommendation
-    result = calculate_irrigation_recommendation(soil_moisture, rain_probability_24h)
+    result = calculate_irrigation_recommendation(
+        soil_moisture=soil_moisture,
+        rain_probability_24h=rain_probability_24h,
+        crop_type=crop_type,
+        growth_stage=growth_stage
+    )
     result["location"] = location_name
     return result

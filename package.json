@@ -1,0 +1,21 @@
+{
+  "name": "agrismart-ai",
+  "version": "1.0.0",
+  "description": "AgriSmart AI - Intelligent Agriculture for a Sustainable Future (SIH 2026)",
+  "scripts": {
+    "dev": "npx -y serve -p 5173 frontend",
+    "start": "npx -y serve -p 5173 frontend",
+    "lint": "node -c frontend/script.js frontend/js/config.js frontend/js/api.js frontend/js/state.js frontend/js/auth.js frontend/js/navigation.js",
+    "build": "node -e \"const fs = require('fs'); ['frontend/index.html', 'frontend/style.css', 'frontend/script.js'].forEach(f => { if (!fs.existsSync(f)) throw new Error('Missing: ' + f); }); console.log('Vanilla HTML5/CSS3/ES6 static build verified successfully.');\"",
+    "test": "node scripts/test_part5_final.js"
+  },
+  "keywords": [
+    "agritech",
+    "sih2026",
+    "crop-disease-detection",
+    "pytorch",
+    "smart-farming"
+  ],
+  "author": "AgriSmart AI Team",
+  "license": "MIT"
+}

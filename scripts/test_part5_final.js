@@ -76,7 +76,7 @@ async function runPart5FinalQA() {
     assert(healthRes.json && healthRes.json.status === "ok", "System status is 'ok'");
     assert(healthRes.json.model_loaded === true, "Model loaded status is true");
     assert(healthRes.json.framework === "pytorch", "ML Framework is PyTorch");
-    assert(healthRes.json.num_classes === 16, "Model output classes match 16 ICAR classes");
+    assert(healthRes.json.num_classes === 15, "Model output classes match 15 trained PlantVillage/SIH classes");
     assert(Array.isArray(healthRes.json.input_shape) && healthRes.json.input_shape[0] === 224, "Model input shape is 224x224x3");
   } catch (err) {
     assert(false, `Health check connection failed: ${err.message}`);
